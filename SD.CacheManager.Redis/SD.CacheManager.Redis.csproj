@@ -30,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\SD.CacheManager.Redis.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ServiceStack.Common, Version=4.0.40.0, Culture=neutral, processorArchitecture=MSIL">

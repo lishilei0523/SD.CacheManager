@@ -4,12 +4,12 @@ using System.Runtime.InteropServices;
 // 有关程序集的常规信息通过以下
 // 特性集控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("SD.CacheStorage")]
-[assembly: AssemblyDescription("一体化项目组 - 缓存组件")]
+[assembly: AssemblyTitle("SD.CacheManager")]
+[assembly: AssemblyDescription("缓存组件")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SD.CacheStorage")]
-[assembly: AssemblyCopyright("Copyright © ShSoft 2015")]
+[assembly: AssemblyProduct("SD.CacheManager")]
+[assembly: AssemblyCopyright("Copyright © SD 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
