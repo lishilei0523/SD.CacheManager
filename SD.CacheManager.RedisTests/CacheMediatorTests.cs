@@ -7,7 +7,7 @@ namespace SD.CacheManager.RedisTests
     /// 缓存测试
     /// </summary>
     [TestClass]
-    public class CacheManagerTests
+    public class CacheMediatorTests
     {
         /// <summary>
         /// 初始化测试
