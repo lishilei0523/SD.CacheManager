@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.CacheManager.Redis", "SD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.CacheManager.Memcached", "SD.CacheManager.Memcached\SD.CacheManager.Memcached.csproj", "{1CF78EEF-DD6D-415F-ACD3-184BC138D086}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.CacheManager.RedisTests", "SD.CacheManager.RedisTests\SD.CacheManager.RedisTests.csproj", "{5B862966-6412-4583-BB4B-3781BABC63BC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{1CF78EEF-DD6D-415F-ACD3-184BC138D086}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CF78EEF-DD6D-415F-ACD3-184BC138D086}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1CF78EEF-DD6D-415F-ACD3-184BC138D086}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B862966-6412-4583-BB4B-3781BABC63BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B862966-6412-4583-BB4B-3781BABC63BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B862966-6412-4583-BB4B-3781BABC63BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B862966-6412-4583-BB4B-3781BABC63BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
