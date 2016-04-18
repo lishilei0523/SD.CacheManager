@@ -1,7 +1,7 @@
 ﻿using System;
 using SD.CacheManager.Interface;
 
-namespace SD.CacheManager.NullObjectImpl
+namespace SD.CacheManager.Implements
 {
     /// <summary>
     /// 空缓存容器
