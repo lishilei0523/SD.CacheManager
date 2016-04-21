@@ -96,5 +96,17 @@ namespace SD.CacheManager.Implements
             }
         }
         #endregion
+
+        #region # 是否存在缓存 —— bool Exists(string key)
+        /// <summary>
+        /// 是否存在缓存
+        /// </summary>
+        /// <param name="key">键</param>
+        /// <returns>是否存在</returns>
+        public bool Exists(string key)
+        {
+            return System.Web.HttpRuntime.Cache.Get(key) != null;
+        }
+        #endregion
     }
 }

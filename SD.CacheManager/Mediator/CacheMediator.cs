@@ -101,5 +101,18 @@ namespace SD.CacheManager.Mediator
             cacheAdapter.Clear();
         }
         #endregion
+
+        #region # 是否存在缓存 —— static bool Exists(string key)
+        /// <summary>
+        /// 是否存在缓存
+        /// </summary>
+        /// <param name="key">键</param>
+        /// <returns>是否存在</returns>
+        public static bool Exists(string key)
+        {
+            ICacheAdapter cacheAdapter = _Container.Resolve<ICacheAdapter>();
+            return cacheAdapter.Exists(key);
+        }
+        #endregion
     }
 }

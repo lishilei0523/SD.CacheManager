@@ -52,5 +52,14 @@ namespace SD.CacheManager.Interface
         /// </summary>
         void Clear();
         #endregion
+
+        #region # 是否存在缓存 —— bool Exists(string key)
+        /// <summary>
+        /// 是否存在缓存
+        /// </summary>
+        /// <param name="key">键</param>
+        /// <returns>是否存在</returns>
+        bool Exists(string key);
+        #endregion
     }
 }
