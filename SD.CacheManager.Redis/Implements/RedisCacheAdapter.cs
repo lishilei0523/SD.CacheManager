@@ -100,7 +100,7 @@ namespace SD.CacheManager.Redis.Implements
         /// </summary>
         public void Clear()
         {
-            _RedisClient.FlushAll();
+            _RedisClient.FlushDb();
         }
         #endregion
 
