@@ -74,5 +74,14 @@ namespace SD.CacheManager.RedisTests
 
             Assert.IsTrue(value1 == null && value2 == null);
         }
+
+        /// <summary>
+        /// 清理
+        /// </summary>
+        [TestCleanup]
+        public void TestFinalize()
+        {
+            CacheMediator.Clear();
+        }
     }
 }

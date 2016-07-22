@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reflection;
-using Autofac;
 using SD.CacheManager.Configuration;
 using SD.CacheManager.Interface;
 
@@ -14,24 +13,19 @@ namespace SD.CacheManager.Mediator
         #region # 字段及构造器
 
         /// <summary>
-        /// Autofac依赖注入容器
+        /// 缓存实现类型
         /// </summary>
-        private static readonly IContainer _Container;
+        private static readonly Type _CacheImplType;
 
         /// <summary>
         /// 静态构造器
         /// </summary>
         static CacheMediator()
         {
-            ContainerBuilder builder = new ContainerBuilder();
-
             //读取配置文件获取缓存实现
             Assembly cacheImpAssembly = Assembly.Load(CacheConfiguration.Setting.Assembly);
-            Type cacheImplType = cacheImpAssembly.GetType(CacheConfiguration.Setting.Type);
 
-            builder.RegisterType(cacheImplType).As(typeof(ICacheAdapter));
-
-            _Container = builder.Build();
+            _CacheImplType = cacheImpAssembly.GetType(CacheConfiguration.Setting.Type);
         }
 
         #endregion
@@ -45,7 +39,7 @@ namespace SD.CacheManager.Mediator
         /// <param name="value">值</param>
         public static void Set<T>(string key, T value)
         {
-            ICacheAdapter cacheAdapter = _Container.Resolve<ICacheAdapter>();
+            ICacheAdapter cacheAdapter = (ICacheAdapter)Activator.CreateInstance(_CacheImplType);
             cacheAdapter.Set(key, value);
         }
         #endregion
@@ -60,7 +54,7 @@ namespace SD.CacheManager.Mediator
         /// <param name="exp">过期时间</param>
         public static void Set<T>(string key, T value, DateTime exp)
         {
-            ICacheAdapter cacheAdapter = _Container.Resolve<ICacheAdapter>();
+            ICacheAdapter cacheAdapter = (ICacheAdapter)Activator.CreateInstance(_CacheImplType);
             cacheAdapter.Set(key, value, exp);
         }
         #endregion
@@ -74,7 +68,7 @@ namespace SD.CacheManager.Mediator
         /// <returns>值</returns>
         public static T Get<T>(string key)
         {
-            ICacheAdapter cacheAdapter = _Container.Resolve<ICacheAdapter>();
+            ICacheAdapter cacheAdapter = (ICacheAdapter)Activator.CreateInstance(_CacheImplType);
             return cacheAdapter.Get<T>(key);
         }
         #endregion
@@ -86,7 +80,7 @@ namespace SD.CacheManager.Mediator
         /// <param name="key">键</param>
         public static void Remove(string key)
         {
-            ICacheAdapter cacheAdapter = _Container.Resolve<ICacheAdapter>();
+            ICacheAdapter cacheAdapter = (ICacheAdapter)Activator.CreateInstance(_CacheImplType);
             cacheAdapter.Remove(key);
         }
         #endregion
@@ -97,7 +91,7 @@ namespace SD.CacheManager.Mediator
         /// </summary>
         public static void Clear()
         {
-            ICacheAdapter cacheAdapter = _Container.Resolve<ICacheAdapter>();
+            ICacheAdapter cacheAdapter = (ICacheAdapter)Activator.CreateInstance(_CacheImplType);
             cacheAdapter.Clear();
         }
         #endregion
@@ -110,7 +104,7 @@ namespace SD.CacheManager.Mediator
         /// <returns>是否存在</returns>
         public static bool Exists(string key)
         {
-            ICacheAdapter cacheAdapter = _Container.Resolve<ICacheAdapter>();
+            ICacheAdapter cacheAdapter = (ICacheAdapter)Activator.CreateInstance(_CacheImplType);
             return cacheAdapter.Exists(key);
         }
         #endregion
