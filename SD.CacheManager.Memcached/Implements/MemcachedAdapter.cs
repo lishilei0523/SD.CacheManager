@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Configuration;
-using Memcached.Client;
+using System.Net;
+using Enyim.Caching;
+using Enyim.Caching.Configuration;
+using Enyim.Caching.Memcached;
 using SD.CacheManager.Interface;
 
 namespace SD.CacheManager.Memcached.Implements
@@ -40,19 +43,15 @@ namespace SD.CacheManager.Memcached.Implements
             //02.分割IP字符串获得IP数组
             string[] servers = memcachedServers.Split(',');
 
-            //03.初始化缓存池
-            SockIOPool pool = SockIOPool.GetInstance();
-            pool.SetServers(servers);
-            pool.InitConnections = 3;
-            pool.MinConnections = 3;
-            pool.MaxConnections = 5;
-            pool.SocketConnectTimeout = 1000;
-            pool.SocketTimeout = 3000;
-            pool.MaintenanceSleep = 30;
-            pool.Failover = true;
-            pool.Nagle = false;
-            pool.Initialize();
-            _MemcachedClient = new MemcachedClient { EnableCompression = false };
+            MemcachedClientConfiguration config = new MemcachedClientConfiguration();
+
+            foreach (string server in servers)
+            {
+                config.Servers.Add(new IPEndPoint(IPAddress.Parse(server), 11211));
+            }
+            config.Protocol = MemcachedProtocol.Binary;
+
+            _MemcachedClient = new MemcachedClient(config);
 
         }
         #endregion
@@ -66,7 +65,7 @@ namespace SD.CacheManager.Memcached.Implements
         /// <param name="value">值</param>
         public void Set<T>(string key, T value)
         {
-            _MemcachedClient.Set(key, value);
+            _MemcachedClient.Store(StoreMode.Add, key, value);
         }
         #endregion
 
@@ -80,7 +79,7 @@ namespace SD.CacheManager.Memcached.Implements
         /// <param name="exp">过期时间</param>
         public void Set<T>(string key, T value, DateTime exp)
         {
-            _MemcachedClient.Set(key, value, exp);
+            _MemcachedClient.Store(StoreMode.Add, key, value, exp);
         }
         #endregion
 
@@ -104,7 +103,7 @@ namespace SD.CacheManager.Memcached.Implements
         /// <param name="key">键</param>
         public void Remove(string key)
         {
-            _MemcachedClient.Delete(key);
+            _MemcachedClient.Remove(key);
         }
         #endregion
 
