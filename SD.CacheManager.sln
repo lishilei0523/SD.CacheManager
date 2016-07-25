@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.CacheManager.MemcachedTe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.CacheManager.AOP", "SD.CacheManager.AOP\SD.CacheManager.AOP.csproj", "{CA18CE26-D391-4F2D-A149-1C62F189DD18}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.CacheManager.AOPTests", "SD.CacheManager.AOPTests\SD.CacheManager.AOPTests.csproj", "{0D5B32E0-EF91-49A1-9AFE-CDB53ADBB19E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,6 +60,10 @@ Global
 		{CA18CE26-D391-4F2D-A149-1C62F189DD18}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA18CE26-D391-4F2D-A149-1C62F189DD18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA18CE26-D391-4F2D-A149-1C62F189DD18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D5B32E0-EF91-49A1-9AFE-CDB53ADBB19E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D5B32E0-EF91-49A1-9AFE-CDB53ADBB19E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D5B32E0-EF91-49A1-9AFE-CDB53ADBB19E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D5B32E0-EF91-49A1-9AFE-CDB53ADBB19E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
