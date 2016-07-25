@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Reflection;
-using SD.CacheManager.Configuration;
 using SD.CacheManager.Interface;
 
-namespace SD.CacheManager.Mediator
+// ReSharper disable once CheckNamespace
+namespace SD.CacheManager
 {
     /// <summary>
     /// 缓存中介者
@@ -23,9 +23,9 @@ namespace SD.CacheManager.Mediator
         static CacheMediator()
         {
             //读取配置文件获取缓存实现
-            Assembly cacheImpAssembly = Assembly.Load(CacheConfiguration.Setting.Assembly);
+            Assembly cacheImpAssembly = Assembly.Load(CacheProviderConfiguration.Setting.Assembly);
 
-            _CacheImplType = cacheImpAssembly.GetType(CacheConfiguration.Setting.Type);
+            _CacheImplType = cacheImpAssembly.GetType(CacheProviderConfiguration.Setting.Type);
         }
 
         #endregion

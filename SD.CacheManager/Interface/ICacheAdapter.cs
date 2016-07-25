@@ -3,7 +3,7 @@
 namespace SD.CacheManager.Interface
 {
     /// <summary>
-    /// 缓存容器接口
+    /// 缓存适配器接口
     /// </summary>
     public interface ICacheAdapter
     {

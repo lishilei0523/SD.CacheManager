@@ -4,7 +4,6 @@ using System.Security.Cryptography;
 using System.Text;
 using Newtonsoft.Json;
 using PostSharp.Aspects;
-using SD.CacheManager.Mediator;
 
 namespace SD.CacheManager.AOP.Aspects
 {

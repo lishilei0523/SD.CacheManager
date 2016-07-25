@@ -4,12 +4,13 @@ using System.Linq;
 using System.Runtime.Caching;
 using SD.CacheManager.Interface;
 
-namespace SD.CacheManager.Implements
+// ReSharper disable once CheckNamespace
+namespace SD.CacheManager
 {
     /// <summary>
-    /// MemoryCache缓存容器
+    /// MemoryCache缓存提供者
     /// </summary>
-    public class MemoryCacheAdapter : ICacheAdapter
+    public class MemoryCacheProvider : ICacheAdapter
     {
         #region # 写入缓存（无过期时间） —— void Set<T>(string key, T value)
         /// <summary>

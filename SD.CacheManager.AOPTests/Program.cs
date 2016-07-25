@@ -7,9 +7,9 @@ namespace SD.CacheManager.AOPTests
     {
         static void Main(string[] args)
         {
-            //string product1 = GetProduct("123");
-            //string product2 = GetProduct("123");
-            //string product3 = GetProduct("124");
+            string product1 = GetProduct("123");
+            string product2 = GetProduct("123");
+            string product3 = GetProduct("124");
             Tase();
 
             Console.WriteLine("OK");

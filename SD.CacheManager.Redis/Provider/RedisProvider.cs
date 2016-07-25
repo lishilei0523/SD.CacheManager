@@ -3,12 +3,13 @@ using System.Configuration;
 using SD.CacheManager.Interface;
 using ServiceStack.Redis;
 
-namespace SD.CacheManager.Redis.Implements
+// ReSharper disable once CheckNamespace
+namespace SD.CacheManager
 {
     /// <summary>
-    /// Redis缓存容器
+    /// Redis缓存提供者
     /// </summary>
-    public class RedisCacheAdapter : ICacheAdapter
+    public class RedisProvider : ICacheAdapter
     {
         #region # 字段及构造器
 
@@ -25,7 +26,7 @@ namespace SD.CacheManager.Redis.Implements
         /// <summary>
         /// 静态构造器
         /// </summary>
-        static RedisCacheAdapter()
+        static RedisProvider()
         {
             //读取配置文件中的Redis服务端IP地址、端口号
             string ip = ConfigurationManager.AppSettings[RedisServerAppSettingKey];   //127.0.0.1,6379

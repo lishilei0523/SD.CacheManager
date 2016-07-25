@@ -1,24 +1,20 @@
 ﻿using System;
-using System.Configuration;
 using System.Net;
 using Enyim.Caching;
 using Enyim.Caching.Configuration;
 using Enyim.Caching.Memcached;
 using SD.CacheManager.Interface;
+using SD.CacheManager.Memcached.Configuration;
 
-namespace SD.CacheManager.Memcached.Implements
+// ReSharper disable once CheckNamespace
+namespace SD.CacheManager
 {
     /// <summary>
-    /// Memcached缓存容器
+    /// Memcached缓存提供者
     /// </summary>
-    public class MemcachedAdapter : ICacheAdapter
+    public class MemcachedProvider : ICacheAdapter
     {
         #region # 字段及构造器
-
-        /// <summary>
-        /// Memcached服务器地址集AppSetting键
-        /// </summary>
-        private const string MemcachedServersAppSettingKey = "MemcachedServers";
 
         /// <summary>
         /// 定义Memcached客户端私有字段
@@ -28,27 +24,15 @@ namespace SD.CacheManager.Memcached.Implements
         /// <summary>
         /// 静态构造器
         /// </summary>
-        static MemcachedAdapter()
+        static MemcachedProvider()
         {
-            //00.读取配置文件
-            string memcachedServers = ConfigurationManager.AppSettings[MemcachedServersAppSettingKey];
-
-            //01.判断是否为空
-            if (string.IsNullOrEmpty(memcachedServers))      //为空
-            {
-                //抛出异常
-                throw new SystemException("Memcached服务端IP地址组未配置！");
-            }
-
-            //02.分割IP字符串获得IP数组
-            string[] servers = memcachedServers.Split(',');
-
             MemcachedClientConfiguration config = new MemcachedClientConfiguration();
 
-            foreach (string server in servers)
+            foreach (ServerElement element in MemcachedConfiguration.Setting.MemcachedServers)
             {
-                config.Servers.Add(new IPEndPoint(IPAddress.Parse(server), 11211));
+                config.Servers.Add(new IPEndPoint(IPAddress.Parse(element.Host), element.Port));
             }
+
             config.Protocol = MemcachedProtocol.Binary;
 
             _MemcachedClient = new MemcachedClient(config);

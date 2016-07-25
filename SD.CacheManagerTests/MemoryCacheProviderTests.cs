@@ -1,14 +1,14 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SD.CacheManager.Mediator;
+using SD.CacheManager;
 
-namespace SD.CacheManager.MemcachedTests
+namespace SD.CacheManagerTests
 {
     /// <summary>
     /// 缓存测试
     /// </summary>
     [TestClass]
-    public class MemcachedTests
+    public class MemoryCacheProviderTests
     {
         /// <summary>
         /// 初始化测试

@@ -1,26 +1,27 @@
 ﻿using System;
 using System.Configuration;
 
-namespace SD.CacheManager.Configuration
+// ReSharper disable once CheckNamespace
+namespace SD.CacheManager
 {
     /// <summary>
-    /// 缓存配置
+    /// 缓存提供者配置
     /// </summary>
-    public class CacheConfiguration : ConfigurationSection
+    internal class CacheProviderConfiguration : ConfigurationSection
     {
         #region # 字段及构造器
 
         /// <summary>
         /// 单例
         /// </summary>
-        private static readonly CacheConfiguration _Setting;
+        private static readonly CacheProviderConfiguration _Setting;
 
         /// <summary>
         /// 静态构造器
         /// </summary>
-        static CacheConfiguration()
+        static CacheProviderConfiguration()
         {
-            _Setting = (CacheConfiguration)ConfigurationManager.GetSection("cacheConfiguration");
+            _Setting = (CacheProviderConfiguration)ConfigurationManager.GetSection("cacheProviderConfiguration");
 
             #region # 非空验证
 
@@ -34,11 +35,11 @@ namespace SD.CacheManager.Configuration
 
         #endregion
 
-        #region # 访问器 —— static CacheConfiguration Setting
+        #region # 访问器 —— static CacheProviderConfiguration Setting
         /// <summary>
         /// 访问器
         /// </summary>
-        public static CacheConfiguration Setting
+        public static CacheProviderConfiguration Setting
         {
             get { return _Setting; }
         }

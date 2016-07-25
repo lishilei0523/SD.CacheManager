@@ -43,11 +43,11 @@
     <Reference Include="System.Runtime.Caching" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\CacheConfiguration.cs" />
-    <Compile Include="Implements\MemoryCacheAdapter.cs" />
+    <Compile Include="Configuration\CacheProviderConfiguration.cs" />
+    <Compile Include="Providers\MemoryCacheProvider.cs" />
     <Compile Include="Interface\ICacheAdapter.cs" />
     <Compile Include="Mediator\CacheMediator.cs" />
-    <Compile Include="Implements\NullCacheAdapter.cs" />
+    <Compile Include="Providers\NullProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

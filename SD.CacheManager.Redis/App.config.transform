@@ -1,10 +1,6 @@
 ﻿<configuration>
-  <configSections>
-    <!--缓存配置节点-->
-    <section name="cacheConfiguration" type="SD.CacheManager.Configuration.CacheConfiguration,SD.CacheManager"/>
-  </configSections>
-  <!--缓存配置-->
-  <cacheConfiguration type="SD.CacheManager.Redis.Implements.RedisCacheAdapter" assembly="SD.CacheManager.Redis"/>
+  <!--缓存提供者配置-->
+  <cacheProviderConfiguration type="SD.CacheManager.RedisProvider" assembly="SD.CacheManager.Redis"/>
   <!--应用程序配置-->
   <appSettings>
     <!--Redis服务器地址，示例：127.0.0.1,6379-->

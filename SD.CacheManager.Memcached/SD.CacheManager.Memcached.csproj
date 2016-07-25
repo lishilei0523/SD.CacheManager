@@ -42,7 +42,10 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Implements\MemcachedAdapter.cs" />
+    <Compile Include="Configuration\ServerElement.cs" />
+    <Compile Include="Configuration\ServerElementCollection.cs" />
+    <Compile Include="Configuration\MemcachedConfiguration.cs" />
+    <Compile Include="Provider\MemcachedProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

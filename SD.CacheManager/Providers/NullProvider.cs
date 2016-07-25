@@ -1,12 +1,13 @@
 ﻿using System;
 using SD.CacheManager.Interface;
 
-namespace SD.CacheManager.Implements
+// ReSharper disable once CheckNamespace
+namespace SD.CacheManager
 {
     /// <summary>
-    /// 空缓存容器
+    /// 空缓存提供者
     /// </summary>
-    public class NullCacheAdapter : ICacheAdapter
+    public class NullProvider : ICacheAdapter
     {
         public void Set<T>(string key, T value) { }
         public void Set<T>(string key, T value, DateTime exp) { }

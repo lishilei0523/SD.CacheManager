@@ -1,14 +1,13 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SD.CacheManager.Mediator;
 
-namespace SD.CacheManager.RedisTests
+namespace SD.CacheManager.MemcachedTests
 {
     /// <summary>
     /// 缓存测试
     /// </summary>
     [TestClass]
-    public class RedisCacheTests
+    public class MemcachedProviderTests
     {
         /// <summary>
         /// 初始化测试
