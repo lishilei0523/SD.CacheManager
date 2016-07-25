@@ -8,7 +8,7 @@ namespace SD.CacheManagerTests
     /// 缓存测试
     /// </summary>
     [TestClass]
-    public class HttpRuntimeCacheTests
+    public class MemoryCacheTests
     {
         /// <summary>
         /// 初始化测试

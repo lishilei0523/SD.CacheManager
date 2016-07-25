@@ -40,11 +40,11 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Web" />
+    <Reference Include="System.Runtime.Caching" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\CacheConfiguration.cs" />
-    <Compile Include="Implements\HttpRuntimeCacheAdapter.cs" />
+    <Compile Include="Implements\MemoryCacheAdapter.cs" />
     <Compile Include="Interface\ICacheAdapter.cs" />
     <Compile Include="Mediator\CacheMediator.cs" />
     <Compile Include="Implements\NullCacheAdapter.cs" />

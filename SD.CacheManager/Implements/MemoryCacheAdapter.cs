@@ -1,14 +1,15 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Caching;
 using SD.CacheManager.Interface;
 
 namespace SD.CacheManager.Implements
 {
     /// <summary>
-    /// HttpRuntimeCache缓存容器
+    /// MemoryCache缓存容器
     /// </summary>
-    public class HttpRuntimeCacheAdapter : ICacheAdapter
+    public class MemoryCacheAdapter : ICacheAdapter
     {
         #region # 写入缓存（无过期时间） —— void Set<T>(string key, T value)
         /// <summary>
@@ -20,11 +21,15 @@ namespace SD.CacheManager.Implements
         public void Set<T>(string key, T value)
         {
             //如果缓存已存在则清空
-            if (System.Web.HttpRuntime.Cache.Get(key) != null)
+            if (MemoryCache.Default.Get(key) != null)
             {
-                System.Web.HttpRuntime.Cache.Remove(key);
+                MemoryCache.Default.Remove(key);
             }
-            System.Web.HttpRuntime.Cache.Insert(key, value);
+
+            CacheItemPolicy policy = new CacheItemPolicy();
+            policy.Priority = CacheItemPriority.NotRemovable;
+
+            MemoryCache.Default.Set(key, value, policy);
         }
         #endregion
 
@@ -39,11 +44,15 @@ namespace SD.CacheManager.Implements
         public void Set<T>(string key, T value, DateTime exp)
         {
             //如果缓存已存在则清空
-            if (System.Web.HttpRuntime.Cache.Get(key) != null)
+            if (MemoryCache.Default.Get(key) != null)
             {
-                System.Web.HttpRuntime.Cache.Remove(key);
+                MemoryCache.Default.Remove(key);
             }
-            System.Web.HttpRuntime.Cache.Insert(key, value, null, exp, TimeSpan.Zero);
+
+            CacheItemPolicy policy = new CacheItemPolicy();
+            policy.AbsoluteExpiration = exp;
+
+            MemoryCache.Default.Set(key, value, policy);
         }
         #endregion
 
@@ -56,7 +65,7 @@ namespace SD.CacheManager.Implements
         /// <returns>值</returns>
         public T Get<T>(string key)
         {
-            return (T)System.Web.HttpRuntime.Cache.Get(key);
+            return (T)MemoryCache.Default.Get(key);
         }
         #endregion
 
@@ -67,7 +76,7 @@ namespace SD.CacheManager.Implements
         /// <param name="key">键</param>
         public void Remove(string key)
         {
-            System.Web.HttpRuntime.Cache.Remove(key);
+            MemoryCache.Default.Remove(key);
         }
         #endregion
 
@@ -77,22 +86,9 @@ namespace SD.CacheManager.Implements
         /// </summary>
         public void Clear()
         {
-            //01.定义key集合用于存储所有cache的键
-            List<string> keys = new List<string>();
-
-            //02.获取HttpRuntime字典枚举器
-            IDictionaryEnumerator enumerator = System.Web.HttpRuntime.Cache.GetEnumerator();
-
-            //03.将所有缓存键添加到keys集合
-            while (enumerator.MoveNext())
+            foreach (KeyValuePair<string, object> keyValue in MemoryCache.Default.ToArray())
             {
-                keys.Add(enumerator.Key.ToString());
-            }
-
-            //04.循环删除所有缓存
-            foreach (string key in keys)
-            {
-                System.Web.HttpRuntime.Cache.Remove(key);
+                MemoryCache.Default.Remove(keyValue.Key);
             }
         }
         #endregion
@@ -105,7 +101,7 @@ namespace SD.CacheManager.Implements
         /// <returns>是否存在</returns>
         public bool Exists(string key)
         {
-            return System.Web.HttpRuntime.Cache.Get(key) != null;
+            return MemoryCache.Default.Get(key) != null;
         }
         #endregion
     }

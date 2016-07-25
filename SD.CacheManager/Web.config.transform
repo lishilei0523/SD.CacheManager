@@ -4,6 +4,6 @@
     <section name="cacheConfiguration" type="SD.CacheManager.Configuration.CacheConfiguration,SD.CacheManager"/>
   </configSections>
 
-  <!--缓存配置，默认采用HttpRuntime缓存-->
-  <cacheConfiguration type="SD.CacheManager.Implements.HttpRuntimeCacheAdapter" assembly="SD.CacheManager"/>
+  <!--缓存配置，默认采用MemoryCache缓存-->
+  <cacheConfiguration type="SD.CacheManager.Implements.MemoryCacheAdapter" assembly="SD.CacheManager"/>
 </configuration>
