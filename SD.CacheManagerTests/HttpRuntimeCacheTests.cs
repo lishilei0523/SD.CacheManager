@@ -1,13 +1,14 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SD.CacheManager.Mediator;
 
-namespace SD.CacheManager.RedisTests
+namespace SD.CacheManagerTests
 {
     /// <summary>
     /// 缓存测试
     /// </summary>
     [TestClass]
-    public class CacheMediatorTests
+    public class HttpRuntimeCacheTests
     {
         /// <summary>
         /// 初始化测试
@@ -25,13 +26,16 @@ namespace SD.CacheManager.RedisTests
         [TestMethod]
         public void TestSetAndGetCache()
         {
-            string cacheKey = "key";
-            string cacheValue = "value";
+            for (int index = 0; index < 3000; index++)
+            {
+                string cacheKey = Guid.NewGuid().ToString();
+                string cacheValue = Guid.NewGuid().ToString();
 
-            CacheMediator.Set(cacheKey, cacheValue);
+                CacheMediator.Set(cacheKey, cacheValue);
 
-            string value = CacheMediator.Get<string>(cacheKey);
-            Assert.IsTrue(value == cacheValue);
+                string value = CacheMediator.Get<string>(cacheKey);
+                Assert.IsTrue(value == cacheValue);
+            }
         }
 
         /// <summary>
