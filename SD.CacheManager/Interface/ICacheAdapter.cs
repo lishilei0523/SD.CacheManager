@@ -5,7 +5,7 @@ namespace SD.CacheManager.Interface
     /// <summary>
     /// 缓存适配器接口
     /// </summary>
-    public interface ICacheAdapter
+    public interface ICacheAdapter : IDisposable
     {
         #region # 写入缓存（无过期时间） —— void Set<T>(string key, T value)
         /// <summary>

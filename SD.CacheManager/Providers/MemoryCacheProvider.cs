@@ -105,5 +105,15 @@ namespace SD.CacheManager
             return MemoryCache.Default.Get(key) != null;
         }
         #endregion
+
+        #region # 释放资源 —— void Dispose()
+        /// <summary>
+        /// 释放资源
+        /// </summary>
+        public void Dispose()
+        {
+
+        }
+        #endregion
     }
 }

@@ -17,9 +17,9 @@ namespace SD.CacheManager
         #region # 字段及构造器
 
         /// <summary>
-        /// 定义Memcached客户端私有字段
+        /// Memcached客户端配置
         /// </summary>
-        private static readonly MemcachedClient _MemcachedClient;
+        private static readonly MemcachedClientConfiguration _MemcachedClientConfig;
 
         /// <summary>
         /// 静态构造器
@@ -35,9 +35,23 @@ namespace SD.CacheManager
 
             config.Protocol = MemcachedProtocol.Binary;
 
-            _MemcachedClient = new MemcachedClient(config);
-
+            _MemcachedClientConfig = config;
         }
+
+
+        /// <summary>
+        /// Memcached客户端
+        /// </summary>
+        private readonly MemcachedClient _memcachedClient;
+
+        /// <summary>
+        /// 构造器
+        /// </summary>
+        public MemcachedProvider()
+        {
+            this._memcachedClient = new MemcachedClient(_MemcachedClientConfig);
+        }
+
         #endregion
 
         #region # 写入缓存（无过期时间） —— void Set<T>(string key, T value)
@@ -49,7 +63,7 @@ namespace SD.CacheManager
         /// <param name="value">值</param>
         public void Set<T>(string key, T value)
         {
-            _MemcachedClient.Store(StoreMode.Add, key, value);
+            this._memcachedClient.Store(StoreMode.Add, key, value);
         }
         #endregion
 
@@ -63,7 +77,7 @@ namespace SD.CacheManager
         /// <param name="exp">过期时间</param>
         public void Set<T>(string key, T value, DateTime exp)
         {
-            _MemcachedClient.Store(StoreMode.Add, key, value, exp);
+            this._memcachedClient.Store(StoreMode.Add, key, value, exp);
         }
         #endregion
 
@@ -76,7 +90,7 @@ namespace SD.CacheManager
         /// <returns>值</returns>
         public T Get<T>(string key)
         {
-            return (T)_MemcachedClient.Get(key);
+            return (T)this._memcachedClient.Get(key);
         }
         #endregion
 
@@ -87,7 +101,7 @@ namespace SD.CacheManager
         /// <param name="key">键</param>
         public void Remove(string key)
         {
-            _MemcachedClient.Remove(key);
+            this._memcachedClient.Remove(key);
         }
         #endregion
 
@@ -97,7 +111,7 @@ namespace SD.CacheManager
         /// </summary>
         public void Clear()
         {
-            _MemcachedClient.FlushAll();
+            this._memcachedClient.FlushAll();
         }
         #endregion
 
@@ -109,7 +123,20 @@ namespace SD.CacheManager
         /// <returns>是否存在</returns>
         public bool Exists(string key)
         {
-            return _MemcachedClient.Get(key) != null;
+            return this._memcachedClient.Get(key) != null;
+        }
+        #endregion
+
+        #region # 释放资源 —— void Dispose()
+        /// <summary>
+        /// 释放资源
+        /// </summary>
+        public void Dispose()
+        {
+            if (this._memcachedClient != null)
+            {
+                this._memcachedClient.Dispose();
+            }
         }
         #endregion
     }

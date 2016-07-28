@@ -39,8 +39,10 @@ namespace SD.CacheManager
         /// <param name="value">值</param>
         public static void Set<T>(string key, T value)
         {
-            ICacheAdapter cacheAdapter = (ICacheAdapter)Activator.CreateInstance(_CacheImplType);
-            cacheAdapter.Set(key, value);
+            using (ICacheAdapter cacheAdapter = (ICacheAdapter)Activator.CreateInstance(_CacheImplType))
+            {
+                cacheAdapter.Set(key, value);
+            }
         }
         #endregion
 
@@ -54,8 +56,10 @@ namespace SD.CacheManager
         /// <param name="exp">过期时间</param>
         public static void Set<T>(string key, T value, DateTime exp)
         {
-            ICacheAdapter cacheAdapter = (ICacheAdapter)Activator.CreateInstance(_CacheImplType);
-            cacheAdapter.Set(key, value, exp);
+            using (ICacheAdapter cacheAdapter = (ICacheAdapter)Activator.CreateInstance(_CacheImplType))
+            {
+                cacheAdapter.Set(key, value, exp);
+            }
         }
         #endregion
 
@@ -68,8 +72,10 @@ namespace SD.CacheManager
         /// <returns>值</returns>
         public static T Get<T>(string key)
         {
-            ICacheAdapter cacheAdapter = (ICacheAdapter)Activator.CreateInstance(_CacheImplType);
-            return cacheAdapter.Get<T>(key);
+            using (ICacheAdapter cacheAdapter = (ICacheAdapter)Activator.CreateInstance(_CacheImplType))
+            {
+                return cacheAdapter.Get<T>(key);
+            }
         }
         #endregion
 
@@ -80,8 +86,10 @@ namespace SD.CacheManager
         /// <param name="key">键</param>
         public static void Remove(string key)
         {
-            ICacheAdapter cacheAdapter = (ICacheAdapter)Activator.CreateInstance(_CacheImplType);
-            cacheAdapter.Remove(key);
+            using (ICacheAdapter cacheAdapter = (ICacheAdapter)Activator.CreateInstance(_CacheImplType))
+            {
+                cacheAdapter.Remove(key);
+            }
         }
         #endregion
 
@@ -91,8 +99,10 @@ namespace SD.CacheManager
         /// </summary>
         public static void Clear()
         {
-            ICacheAdapter cacheAdapter = (ICacheAdapter)Activator.CreateInstance(_CacheImplType);
-            cacheAdapter.Clear();
+            using (ICacheAdapter cacheAdapter = (ICacheAdapter)Activator.CreateInstance(_CacheImplType))
+            {
+                cacheAdapter.Clear();
+            }
         }
         #endregion
 
@@ -104,8 +114,10 @@ namespace SD.CacheManager
         /// <returns>是否存在</returns>
         public static bool Exists(string key)
         {
-            ICacheAdapter cacheAdapter = (ICacheAdapter)Activator.CreateInstance(_CacheImplType);
-            return cacheAdapter.Exists(key);
+            using (ICacheAdapter cacheAdapter = (ICacheAdapter)Activator.CreateInstance(_CacheImplType))
+            {
+                return cacheAdapter.Exists(key);
+            }
         }
         #endregion
     }

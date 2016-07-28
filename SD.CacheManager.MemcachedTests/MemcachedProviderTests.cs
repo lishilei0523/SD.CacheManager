@@ -25,7 +25,7 @@ namespace SD.CacheManager.MemcachedTests
         [TestMethod]
         public void TestSetAndGetCache()
         {
-            for (int index = 0; index < 3000; index++)
+            for (int index = 0; index < 10; index++)
             {
                 string cacheKey = Guid.NewGuid().ToString();
                 string cacheValue = Guid.NewGuid().ToString();

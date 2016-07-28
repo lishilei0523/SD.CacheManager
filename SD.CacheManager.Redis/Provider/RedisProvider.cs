@@ -19,9 +19,9 @@ namespace SD.CacheManager
         private const string RedisServerAppSettingKey = "RedisServer";
 
         /// <summary>
-        /// 定义Redis客户端私有字段
+        /// Redis服务器地址
         /// </summary>
-        private static readonly RedisClient _RedisClient;     // = new RedisClient("127.0.0.1", 6379); 
+        private static readonly string[] _RedisServer;
 
         /// <summary>
         /// 静态构造器
@@ -37,9 +37,23 @@ namespace SD.CacheManager
                 throw new SystemException("Redis服务端IP地址未配置！");
             }
 
-            string[] redisServer = ip.Split(',');
+            _RedisServer = ip.Split(',');
+
+        }
+
+
+        /// <summary>
+        /// Redis客户端
+        /// </summary>
+        private readonly RedisClient _redisClient;
+
+        /// <summary>
+        /// 构造器
+        /// </summary>
+        public RedisProvider()
+        {
             //实例化RedisClient
-            _RedisClient = new RedisClient(redisServer[0], int.Parse(redisServer[1]));
+            this._redisClient = new RedisClient(_RedisServer[0], int.Parse(_RedisServer[1]));
         }
 
         #endregion
@@ -53,7 +67,7 @@ namespace SD.CacheManager
         /// <param name="value">值</param>
         public void Set<T>(string key, T value)
         {
-            _RedisClient.Set(key, value);
+            this._redisClient.Set(key, value);
         }
         #endregion
 
@@ -67,7 +81,7 @@ namespace SD.CacheManager
         /// <param name="exp">过期时间</param>
         public void Set<T>(string key, T value, DateTime exp)
         {
-            _RedisClient.Set(key, value, exp);
+            this._redisClient.Set(key, value, exp);
         }
         #endregion
 
@@ -80,7 +94,7 @@ namespace SD.CacheManager
         /// <returns>值</returns>
         public T Get<T>(string key)
         {
-            return _RedisClient.Get<T>(key);
+            return this._redisClient.Get<T>(key);
         }
         #endregion
 
@@ -91,7 +105,7 @@ namespace SD.CacheManager
         /// <param name="key">键</param>
         public void Remove(string key)
         {
-            _RedisClient.Remove(key);
+            this._redisClient.Remove(key);
         }
         #endregion
 
@@ -101,7 +115,7 @@ namespace SD.CacheManager
         /// </summary>
         public void Clear()
         {
-            _RedisClient.FlushDb();
+            this._redisClient.FlushDb();
         }
         #endregion
 
@@ -113,7 +127,20 @@ namespace SD.CacheManager
         /// <returns>是否存在</returns>
         public bool Exists(string key)
         {
-            return _RedisClient.Get<object>(key) != null;
+            return this._redisClient.Get<object>(key) != null;
+        }
+        #endregion
+
+        #region # 释放资源 —— void Dispose()
+        /// <summary>
+        /// 释放资源
+        /// </summary>
+        public void Dispose()
+        {
+            if (this._redisClient != null)
+            {
+                this._redisClient.Dispose();
+            }
         }
         #endregion
     }

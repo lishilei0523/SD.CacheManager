@@ -15,5 +15,6 @@ namespace SD.CacheManager
         public void Remove(string key) { }
         public void Clear() { }
         public bool Exists(string key) { return false; }
+        public void Dispose() { }
     }
 }
