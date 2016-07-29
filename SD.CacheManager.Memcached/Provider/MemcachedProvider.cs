@@ -66,7 +66,14 @@ namespace SD.CacheManager
         /// <param name="value">值</param>
         public void Set<T>(string key, T value)
         {
-            this._memcachedClient.Store(StoreMode.Set, key, value);
+            if (!this.Exists(key))
+            {
+                this._memcachedClient.Store(StoreMode.Add, key, value);
+            }
+            else
+            {
+                this._memcachedClient.Store(StoreMode.Replace, key, value);
+            }
         }
         #endregion
 
@@ -80,7 +87,14 @@ namespace SD.CacheManager
         /// <param name="exp">过期时间</param>
         public void Set<T>(string key, T value, DateTime exp)
         {
-            this._memcachedClient.Store(StoreMode.Set, key, value, exp);
+            if (!this.Exists(key))
+            {
+                this._memcachedClient.Store(StoreMode.Add, key, value, exp);
+            }
+            else
+            {
+                this._memcachedClient.Store(StoreMode.Replace, key, value, exp);
+            }
         }
         #endregion
 
