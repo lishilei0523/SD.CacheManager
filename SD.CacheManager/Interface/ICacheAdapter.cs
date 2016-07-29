@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SD.CacheManager.Interface
 {
@@ -46,6 +47,22 @@ namespace SD.CacheManager.Interface
         void Remove(string key);
         #endregion
 
+        #region # 移除缓存 —— void RemoveRange(IEnumerable<string> keys)
+        /// <summary>
+        /// 移除缓存
+        /// </summary>
+        /// <param name="keys">缓存键集</param>
+        void RemoveRange(IEnumerable<string> keys);
+        #endregion
+
+        #region # 移除缓存 —— void RemoveRange(string keyPattern)
+        /// <summary>
+        /// 移除缓存
+        /// </summary>
+        /// <param name="keyPattern">缓存键表达式</param>
+        void RemoveRange(string keyPattern);
+        #endregion
+
         #region # 清空缓存 —— void Clear()
         /// <summary>
         /// 清空缓存
@@ -60,6 +77,15 @@ namespace SD.CacheManager.Interface
         /// <param name="key">键</param>
         /// <returns>是否存在</returns>
         bool Exists(string key);
+        #endregion
+
+        #region # 获取缓存键列表 —— IEnumerable<string> GetKeys(string pattern)
+        /// <summary>
+        /// 获取缓存键列表
+        /// </summary>
+        /// <param name="pattern">正则表达式</param>
+        /// <returns>缓存键列表</returns>
+        IEnumerable<string> GetKeys(string pattern);
         #endregion
     }
 }

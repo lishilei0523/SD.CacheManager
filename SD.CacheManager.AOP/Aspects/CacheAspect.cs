@@ -132,7 +132,10 @@ namespace SD.CacheManager.AOP.Aspects
             string key = keyBuilder.ToString();
             string keyMD5 = this.GetMD5(key);
 
-            return keyMD5;
+            //构造最终键
+            string finalKey = string.Format("{0}.{1}/{2}", args.Method.DeclaringType.FullName, args.Method.Name, keyMD5);
+
+            return finalKey;
         }
         #endregion
 

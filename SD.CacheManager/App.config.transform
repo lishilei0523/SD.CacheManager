@@ -3,7 +3,6 @@
     <!--缓存提供者配置节点-->
     <section name="cacheProviderConfiguration" type="SD.CacheManager.CacheProviderConfiguration,SD.CacheManager"/>
   </configSections>
-
   <!--缓存提供者配置，默认采用MemoryCache缓存-->
   <cacheProviderConfiguration type="SD.CacheManager.MemoryCacheProvider" assembly="SD.CacheManager"/>
 </configuration>

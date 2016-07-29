@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
+using System.Text.RegularExpressions;
 using Enyim.Caching;
 using Enyim.Caching.Configuration;
 using Enyim.Caching.Memcached;
 using SD.CacheManager.Interface;
 using SD.CacheManager.Memcached.Configuration;
+using SD.CacheManager.Memcached.Toolkits;
 
 // ReSharper disable once CheckNamespace
 namespace SD.CacheManager
@@ -63,7 +66,7 @@ namespace SD.CacheManager
         /// <param name="value">值</param>
         public void Set<T>(string key, T value)
         {
-            this._memcachedClient.Store(StoreMode.Add, key, value);
+            this._memcachedClient.Store(StoreMode.Set, key, value);
         }
         #endregion
 
@@ -77,7 +80,7 @@ namespace SD.CacheManager
         /// <param name="exp">过期时间</param>
         public void Set<T>(string key, T value, DateTime exp)
         {
-            this._memcachedClient.Store(StoreMode.Add, key, value, exp);
+            this._memcachedClient.Store(StoreMode.Set, key, value, exp);
         }
         #endregion
 
@@ -90,7 +93,7 @@ namespace SD.CacheManager
         /// <returns>值</returns>
         public T Get<T>(string key)
         {
-            return (T)this._memcachedClient.Get(key);
+            return this._memcachedClient.Get<T>(key);
         }
         #endregion
 
@@ -102,6 +105,33 @@ namespace SD.CacheManager
         public void Remove(string key)
         {
             this._memcachedClient.Remove(key);
+        }
+        #endregion
+
+        #region # 移除缓存 —— void RemoveRange(IEnumerable<string> keys)
+        /// <summary>
+        /// 移除缓存
+        /// </summary>
+        /// <param name="keys">缓存键集</param>
+        public void RemoveRange(IEnumerable<string> keys)
+        {
+            foreach (string key in keys)
+            {
+                this.Remove(key);
+            }
+        }
+        #endregion
+
+        #region # 移除缓存 —— void RemoveRange(string keyPattern)
+        /// <summary>
+        /// 移除缓存
+        /// </summary>
+        /// <param name="keyPattern">缓存键表达式</param>
+        public void RemoveRange(string keyPattern)
+        {
+            IEnumerable<string> specKeys = this.GetKeys(keyPattern);
+
+            this.RemoveRange(specKeys);
         }
         #endregion
 
@@ -123,7 +153,47 @@ namespace SD.CacheManager
         /// <returns>是否存在</returns>
         public bool Exists(string key)
         {
-            return this._memcachedClient.Get(key) != null;
+            object value;
+            if (this._memcachedClient.TryGet(key, out value))
+            {
+                return true;
+            }
+            return false;
+        }
+        #endregion
+
+        #region # 获取缓存键列表 —— IEnumerable<string> GetKeys(string pattern)
+        /// <summary>
+        /// 获取缓存键列表
+        /// </summary>
+        /// <param name="pattern">正则表达式</param>
+        /// <returns>缓存键列表</returns>
+        public IEnumerable<string> GetKeys(string pattern)
+        {
+            if (string.IsNullOrWhiteSpace(pattern))
+            {
+                return new string[0];
+            }
+
+            List<string> allKeys = new List<string>();
+
+            foreach (IPEndPoint endpoint in _MemcachedClientConfig.Servers)
+            {
+                IEnumerable<string> keys = MemcachedTool.GetKeys(endpoint.Address.ToString(), endpoint.Port);
+                allKeys.AddRange(keys);
+            }
+
+            ICollection<string> specKeys = new HashSet<string>();
+
+            foreach (string key in allKeys)
+            {
+                if (Regex.IsMatch(key, pattern))
+                {
+                    specKeys.Add(key);
+                }
+            }
+
+            return specKeys;
         }
         #endregion
 
