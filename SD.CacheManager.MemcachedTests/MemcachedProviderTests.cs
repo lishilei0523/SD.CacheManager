@@ -28,7 +28,7 @@ namespace SD.CacheManager.MemcachedTests
         [TestMethod]
         public void TestSetAndGetCache()
         {
-            for (int index = 0; index < 1000; index++)
+            for (int index = 0; index < 100; index++)
             {
                 string cacheKey = Guid.NewGuid().ToString();
                 string cacheValue = Guid.NewGuid().ToString();
@@ -46,7 +46,7 @@ namespace SD.CacheManager.MemcachedTests
         [TestMethod]
         public void TestSetAndGetCacheParallel()
         {
-            Parallel.For(0, 1000, index =>
+            Parallel.For(0, 100, index =>
             {
                 string cacheKey = Guid.NewGuid().ToString();
                 string cacheValue = Guid.NewGuid().ToString();
