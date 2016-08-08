@@ -41,24 +41,6 @@ namespace SD.CacheManager.RedisTests
         }
 
         /// <summary>
-        /// 测试插入与读取缓存
-        /// </summary>
-        [TestMethod]
-        public void TestSetAndGetCacheParallel()
-        {
-            Parallel.For(0, 1000, index =>
-            {
-                string cacheKey = Guid.NewGuid().ToString();
-                string cacheValue = Guid.NewGuid().ToString();
-
-                CacheMediator.Set(cacheKey, cacheValue);
-
-                string value = CacheMediator.Get<string>(cacheKey);
-                Assert.IsTrue(value == cacheValue);
-            });
-        }
-
-        /// <summary>
         /// 测试移除缓存
         /// </summary>
         [TestMethod]

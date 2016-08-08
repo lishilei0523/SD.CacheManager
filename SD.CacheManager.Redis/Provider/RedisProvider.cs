@@ -17,14 +17,14 @@ namespace SD.CacheManager
         /// <summary>
         /// Redis客户端管理器
         /// </summary>
-        private static readonly IRedisClientsManager _ClientsManager;
+        private readonly IRedisClientsManager _clientsManager;
 
         /// <summary>
         /// 静态构造器
         /// </summary>
-        static RedisProvider()
+        public RedisProvider()
         {
-            _ClientsManager = RedisManager.CreateClientsManager();
+            this._clientsManager = RedisManager.CreateClientsManager();
         }
 
         #endregion
@@ -38,7 +38,7 @@ namespace SD.CacheManager
         /// <param name="value">值</param>
         public void Set<T>(string key, T value)
         {
-            using (IRedisClient redisClient = _ClientsManager.GetClient())
+            using (IRedisClient redisClient = this._clientsManager.GetClient())
             {
                 redisClient.Set(key, value);
             }
@@ -55,7 +55,7 @@ namespace SD.CacheManager
         /// <param name="exp">过期时间</param>
         public void Set<T>(string key, T value, DateTime exp)
         {
-            using (IRedisClient redisClient = _ClientsManager.GetClient())
+            using (IRedisClient redisClient = this._clientsManager.GetClient())
             {
                 redisClient.Set(key, value, exp);
             }
@@ -71,7 +71,7 @@ namespace SD.CacheManager
         /// <returns>值</returns>
         public T Get<T>(string key)
         {
-            using (IRedisClient redisClient = _ClientsManager.GetReadOnlyClient())
+            using (IRedisClient redisClient = this._clientsManager.GetReadOnlyClient())
             {
                 return redisClient.Get<T>(key);
             }
@@ -85,7 +85,7 @@ namespace SD.CacheManager
         /// <param name="key">键</param>
         public void Remove(string key)
         {
-            using (IRedisClient redisClient = _ClientsManager.GetClient())
+            using (IRedisClient redisClient = this._clientsManager.GetClient())
             {
                 redisClient.Remove(key);
             }
@@ -99,7 +99,7 @@ namespace SD.CacheManager
         /// <param name="keys">缓存键集</param>
         public void RemoveRange(IEnumerable<string> keys)
         {
-            using (IRedisClient redisClient = _ClientsManager.GetClient())
+            using (IRedisClient redisClient = this._clientsManager.GetClient())
             {
                 redisClient.RemoveAll(keys);
             }
@@ -125,7 +125,7 @@ namespace SD.CacheManager
         /// </summary>
         public void Clear()
         {
-            using (IRedisClient redisClient = _ClientsManager.GetClient())
+            using (IRedisClient redisClient = this._clientsManager.GetClient())
             {
                 redisClient.FlushDb();
             }
@@ -140,7 +140,7 @@ namespace SD.CacheManager
         /// <returns>是否存在</returns>
         public bool Exists(string key)
         {
-            using (IRedisClient redisClient = _ClientsManager.GetReadOnlyClient())
+            using (IRedisClient redisClient = this._clientsManager.GetReadOnlyClient())
             {
                 return redisClient.ContainsKey(key);
             }
@@ -159,7 +159,7 @@ namespace SD.CacheManager
             {
                 return new string[0];
             }
-            using (IRedisClient redisClient = _ClientsManager.GetReadOnlyClient())
+            using (IRedisClient redisClient = this._clientsManager.GetReadOnlyClient())
             {
                 return redisClient.SearchKeys(pattern);
             }
@@ -172,7 +172,10 @@ namespace SD.CacheManager
         /// </summary>
         public void Dispose()
         {
-
+            if (this._clientsManager != null)
+            {
+                this._clientsManager.Dispose();
+            }
         }
         #endregion
     }
