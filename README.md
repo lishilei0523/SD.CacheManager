@@ -10,9 +10,5 @@
 
 	2、运行测试
 
-依赖NuGet包：
-	
-	Autofac
-
 Ps：
 	如果使用Memcached或Redis缓存需配置服务器地址
