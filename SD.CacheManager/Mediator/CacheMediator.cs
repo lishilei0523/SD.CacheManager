@@ -1,7 +1,7 @@
-﻿using System;
+﻿using SD.CacheManager.Interface;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
-using SD.CacheManager.Interface;
 
 // ReSharper disable once CheckNamespace
 namespace SD.CacheManager
@@ -14,6 +14,11 @@ namespace SD.CacheManager
         #region # 字段及构造器
 
         /// <summary>
+        /// 同步锁
+        /// </summary>
+        private static readonly object _Sync;
+
+        /// <summary>
         /// 缓存实现类型
         /// </summary>
         private static readonly Type _CacheImplType;
@@ -23,6 +28,8 @@ namespace SD.CacheManager
         /// </summary>
         static CacheMediator()
         {
+            _Sync = new object();
+
             //读取配置文件获取缓存实现
             Assembly cacheImpAssembly = Assembly.Load(CacheProviderConfiguration.Setting.Assembly);
 
@@ -42,7 +49,10 @@ namespace SD.CacheManager
         {
             using (ICacheAdapter cacheAdapter = (ICacheAdapter)Activator.CreateInstance(_CacheImplType))
             {
-                cacheAdapter.Set(key, value);
+                lock (_Sync)
+                {
+                    cacheAdapter.Set(key, value);
+                }
             }
         }
         #endregion
@@ -59,7 +69,10 @@ namespace SD.CacheManager
         {
             using (ICacheAdapter cacheAdapter = (ICacheAdapter)Activator.CreateInstance(_CacheImplType))
             {
-                cacheAdapter.Set(key, value, exp);
+                lock (_Sync)
+                {
+                    cacheAdapter.Set(key, value, exp);
+                }
             }
         }
         #endregion
@@ -145,7 +158,10 @@ namespace SD.CacheManager
         {
             using (ICacheAdapter cacheAdapter = (ICacheAdapter)Activator.CreateInstance(_CacheImplType))
             {
-                return cacheAdapter.Exists(key);
+                lock (_Sync)
+                {
+                    return cacheAdapter.Exists(key);
+                }
             }
         }
         #endregion
