@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace SD.CacheManager.MemcachedTests
+namespace SD.CacheManager.Memcached.Tests
 {
     /// <summary>
     /// 缓存测试
