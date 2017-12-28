@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.CacheManager", "SD.CacheManager\SD.CacheManager.csproj", "{9F9D95B0-7E4C-4138-9468-C881720B5572}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.CacheManager", "sources\SD.CacheManager\SD.CacheManager.csproj", "{9F9D95B0-7E4C-4138-9468-C881720B5572}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.CacheManagerTests", "SD.CacheManagerTests\SD.CacheManagerTests.csproj", "{421786C0-1720-4636-A23D-6FEC573BAD53}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.CacheManager.Tests", "tests\SD.CacheManager.Tests\SD.CacheManager.Tests.csproj", "{421786C0-1720-4636-A23D-6FEC573BAD53}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{1352D744-9AAD-4FE1-AB4D-2DAB70BCE13E}"
 	ProjectSection(SolutionItems) = preProject
@@ -14,17 +14,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{1352D7
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.CacheManager.Redis", "SD.CacheManager.Redis\SD.CacheManager.Redis.csproj", "{9D3130AD-05D6-40F1-8B40-F516FE52AF42}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.CacheManager.Redis", "sources\SD.CacheManager.Redis\SD.CacheManager.Redis.csproj", "{9D3130AD-05D6-40F1-8B40-F516FE52AF42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.CacheManager.Memcached", "SD.CacheManager.Memcached\SD.CacheManager.Memcached.csproj", "{1CF78EEF-DD6D-415F-ACD3-184BC138D086}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.CacheManager.Memcached", "sources\SD.CacheManager.Memcached\SD.CacheManager.Memcached.csproj", "{1CF78EEF-DD6D-415F-ACD3-184BC138D086}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.CacheManager.RedisTests", "SD.CacheManager.RedisTests\SD.CacheManager.RedisTests.csproj", "{5B862966-6412-4583-BB4B-3781BABC63BC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.CacheManager.Redis.Tests", "tests\SD.CacheManager.Redis.Tests\SD.CacheManager.Redis.Tests.csproj", "{5B862966-6412-4583-BB4B-3781BABC63BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.CacheManager.MemcachedTests", "SD.CacheManager.MemcachedTests\SD.CacheManager.MemcachedTests.csproj", "{DD1FA34D-5CF9-4C0D-B307-09071FEBEA21}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.CacheManager.Memcached.Tests", "tests\SD.CacheManager.Memcached.Tests\SD.CacheManager.Memcached.Tests.csproj", "{DD1FA34D-5CF9-4C0D-B307-09071FEBEA21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.CacheManager.AOP", "SD.CacheManager.AOP\SD.CacheManager.AOP.csproj", "{CA18CE26-D391-4F2D-A149-1C62F189DD18}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.CacheManager.AOP", "sources\SD.CacheManager.AOP\SD.CacheManager.AOP.csproj", "{CA18CE26-D391-4F2D-A149-1C62F189DD18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.CacheManager.AOPTests", "SD.CacheManager.AOPTests\SD.CacheManager.AOPTests.csproj", "{0D5B32E0-EF91-49A1-9AFE-CDB53ADBB19E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.CacheManager.AOP.Tests", "tests\SD.CacheManager.AOP.Tests\SD.CacheManager.AOP.Tests.csproj", "{0D5B32E0-EF91-49A1-9AFE-CDB53ADBB19E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 - Sources", "01 - Sources", "{D5633200-486B-44C2-B205-F48AF475B3BF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 - Tests", "02 - Tests", "{4674C0E5-9685-492E-A680-5E5776C98EE1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,5 +71,15 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9F9D95B0-7E4C-4138-9468-C881720B5572} = {D5633200-486B-44C2-B205-F48AF475B3BF}
+		{421786C0-1720-4636-A23D-6FEC573BAD53} = {4674C0E5-9685-492E-A680-5E5776C98EE1}
+		{9D3130AD-05D6-40F1-8B40-F516FE52AF42} = {D5633200-486B-44C2-B205-F48AF475B3BF}
+		{1CF78EEF-DD6D-415F-ACD3-184BC138D086} = {D5633200-486B-44C2-B205-F48AF475B3BF}
+		{5B862966-6412-4583-BB4B-3781BABC63BC} = {4674C0E5-9685-492E-A680-5E5776C98EE1}
+		{DD1FA34D-5CF9-4C0D-B307-09071FEBEA21} = {4674C0E5-9685-492E-A680-5E5776C98EE1}
+		{CA18CE26-D391-4F2D-A149-1C62F189DD18} = {D5633200-486B-44C2-B205-F48AF475B3BF}
+		{0D5B32E0-EF91-49A1-9AFE-CDB53ADBB19E} = {4674C0E5-9685-492E-A680-5E5776C98EE1}
 	EndGlobalSection
 EndGlobal
