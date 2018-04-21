@@ -72,18 +72,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\sources\SD.CacheManager.Redis\SD.CacheManager.Redis.csproj">
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\SD.CacheManager.NET4\SD.CacheManager.NET4.csproj">
+      <Project>{9f9d95b0-7e4c-4138-9468-c881720b5572}</Project>
+      <Name>SD.CacheManager.NET4</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\SD.CacheManager.Redis\SD.CacheManager.Redis.csproj">
       <Project>{9d3130ad-05d6-40f1-8b40-f516fe52af42}</Project>
       <Name>SD.CacheManager.Redis</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\sources\SD.CacheManager\SD.CacheManager.csproj">
-      <Project>{9F9D95B0-7E4C-4138-9468-C881720B5572}</Project>
-      <Name>SD.CacheManager</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

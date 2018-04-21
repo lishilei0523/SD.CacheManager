@@ -8,7 +8,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SD.CacheManager.Memcached.Tests</RootNamespace>
     <AssemblyName>SD.CacheManager.Memcached.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -16,6 +16,7 @@
     <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -57,13 +58,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\sources\SD.CacheManager.Memcached\SD.CacheManager.Memcached.csproj">
+    <ProjectReference Include="..\..\src\SD.CacheManager.Memcached\SD.CacheManager.Memcached.csproj">
       <Project>{1cf78eef-dd6d-415f-acd3-184bc138d086}</Project>
       <Name>SD.CacheManager.Memcached</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\sources\SD.CacheManager\SD.CacheManager.csproj">
+    <ProjectReference Include="..\..\src\SD.CacheManager.NET4\SD.CacheManager.NET4.csproj">
       <Project>{9f9d95b0-7e4c-4138-9468-c881720b5572}</Project>
-      <Name>SD.CacheManager</Name>
+      <Name>SD.CacheManager.NET4</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

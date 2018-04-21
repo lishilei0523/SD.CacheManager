@@ -9,11 +9,12 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SD.CacheManager.AOP.Tests</RootNamespace>
     <AssemblyName>SD.CacheManager.AOP.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <DontImportPostSharp>True</DontImportPostSharp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -57,7 +58,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\sources\SD.CacheManager.AOP\SD.CacheManager.AOP.csproj">
+    <ProjectReference Include="..\..\src\SD.CacheManager.AOP\SD.CacheManager.AOP.csproj">
       <Project>{ca18ce26-d391-4f2d-a149-1c62f189dd18}</Project>
       <Name>SD.CacheManager.AOP</Name>
     </ProjectReference>
