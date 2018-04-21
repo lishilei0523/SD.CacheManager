@@ -1,56 +1,32 @@
-﻿using Enyim.Caching;
-using Enyim.Caching.Configuration;
-using Enyim.Caching.Memcached;
-using SD.CacheManager.Interface;
-using SD.CacheManager.Memcached.Configuration;
+﻿using SD.CacheManager.Interface;
+using SD.CacheManager.Redis.Toolkits;
+using SD.Toolkits.Redis;
+using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
-using System.Net;
+using System.Linq;
 
 // ReSharper disable once CheckNamespace
 namespace SD.CacheManager
 {
     /// <summary>
-    /// Memcached缓存提供者
+    /// Redis缓存提供者
     /// </summary>
-    public class MemcachedProvider : ICacheAdapter
+    public class RedisProvider : ICacheAdapter
     {
-        #region # 字段及构造器
+        #region # 构造器
 
         /// <summary>
-        /// Memcached客户端配置
+        /// Redis客户端
         /// </summary>
-        private static readonly MemcachedClientConfiguration _MemcachedClientConfig;
-
-        /// <summary>
-        /// 静态构造器
-        /// </summary>
-        static MemcachedProvider()
-        {
-            MemcachedClientConfiguration config = new MemcachedClientConfiguration();
-
-            foreach (ServerElement element in MemcachedConfiguration.Setting.MemcachedServers)
-            {
-                config.Servers.Add(new IPEndPoint(IPAddress.Parse(element.Host), element.Port));
-            }
-
-            config.Protocol = MemcachedProtocol.Binary;
-
-            _MemcachedClientConfig = config;
-        }
-
-
-        /// <summary>
-        /// Memcached客户端
-        /// </summary>
-        private readonly MemcachedClient _memcachedClient;
+        private readonly IDatabase _redisClient;
 
         /// <summary>
         /// 构造器
         /// </summary>
-        public MemcachedProvider()
+        public RedisProvider()
         {
-            this._memcachedClient = new MemcachedClient(_MemcachedClientConfig);
+            this._redisClient = RedisManager.GetDatabase();
         }
 
         #endregion
@@ -64,14 +40,8 @@ namespace SD.CacheManager
         /// <param name="value">值</param>
         public void Set<T>(string key, T value)
         {
-            if (!this.Exists(key))
-            {
-                this._memcachedClient.Store(StoreMode.Add, key, value);
-            }
-            else
-            {
-                this._memcachedClient.Store(StoreMode.Replace, key, value);
-            }
+            string json = value.ToJson();
+            this._redisClient.StringSet(key, json);
         }
         #endregion
 
@@ -85,14 +55,10 @@ namespace SD.CacheManager
         /// <param name="exp">过期时间</param>
         public void Set<T>(string key, T value, DateTime exp)
         {
-            if (!this.Exists(key))
-            {
-                this._memcachedClient.Store(StoreMode.Add, key, value, exp);
-            }
-            else
-            {
-                this._memcachedClient.Store(StoreMode.Replace, key, value, exp);
-            }
+            string json = value.ToJson();
+            TimeSpan timeSpan = exp - DateTime.Now;
+
+            this._redisClient.StringSet(key, json, timeSpan);
         }
         #endregion
 
@@ -105,7 +71,16 @@ namespace SD.CacheManager
         /// <returns>值</returns>
         public T Get<T>(string key)
         {
-            return this._memcachedClient.Get<T>(key);
+            string json = this._redisClient.StringGet(key);
+
+            if (string.IsNullOrWhiteSpace(json))
+            {
+                return default(T);
+            }
+
+            T instance = json.JsonToObject<T>();
+
+            return instance;
         }
         #endregion
 
@@ -116,7 +91,7 @@ namespace SD.CacheManager
         /// <param name="key">键</param>
         public void Remove(string key)
         {
-            this._memcachedClient.Remove(key);
+            this._redisClient.KeyDelete(key);
         }
         #endregion
 
@@ -127,10 +102,16 @@ namespace SD.CacheManager
         /// <param name="keys">缓存键集</param>
         public void RemoveRange(IEnumerable<string> keys)
         {
+            keys = keys?.ToArray() ?? new string[0];
+
+            ICollection<RedisKey> redisKeys = new HashSet<RedisKey>();
+
             foreach (string key in keys)
             {
-                this.Remove(key);
+                redisKeys.Add(key);
             }
+
+            this._redisClient.KeyDelete(redisKeys.ToArray());
         }
         #endregion
 
@@ -142,12 +123,7 @@ namespace SD.CacheManager
         /// <returns>是否存在</returns>
         public bool Exists(string key)
         {
-            object value;
-            if (this._memcachedClient.TryGet(key, out value))
-            {
-                return true;
-            }
-            return false;
+            return this._redisClient.KeyExists(key);
         }
         #endregion
 
@@ -157,10 +133,7 @@ namespace SD.CacheManager
         /// </summary>
         public void Dispose()
         {
-            if (this._memcachedClient != null)
-            {
-                this._memcachedClient.Dispose();
-            }
+
         }
         #endregion
     }

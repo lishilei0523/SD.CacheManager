@@ -15,7 +15,6 @@ namespace SD.CacheManager
         public T Get<T>(string key) { return default(T); }
         public void Remove(string key) { }
         public void RemoveRange(IEnumerable<string> keys) { }
-        public void Clear() { }
         public bool Exists(string key) { return false; }
         public void Dispose() { }
     }

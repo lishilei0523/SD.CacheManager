@@ -1,34 +1,18 @@
-﻿using System;
+﻿using SD.CacheManager.Interface;
+using System;
 using System.Collections.Generic;
-using SD.CacheManager.Interface;
-using SD.Toolkits.Redis;
-using ServiceStack.Redis;
+using System.Linq;
+using System.Runtime.Caching;
+using System.Text.RegularExpressions;
 
 // ReSharper disable once CheckNamespace
 namespace SD.CacheManager
 {
     /// <summary>
-    /// Redis缓存提供者
+    /// MemoryCache缓存提供者
     /// </summary>
-    public class RedisProvider : ICacheAdapter
+    public class MemoryCacheProvider : ICacheAdapter
     {
-        #region # 字段及构造器
-
-        /// <summary>
-        /// Redis客户端管理器
-        /// </summary>
-        private readonly IRedisClientsManager _clientsManager;
-
-        /// <summary>
-        /// 静态构造器
-        /// </summary>
-        public RedisProvider()
-        {
-            this._clientsManager = RedisManager.CreateClientsManager();
-        }
-
-        #endregion
-
         #region # 写入缓存（无过期时间） —— void Set<T>(string key, T value)
         /// <summary>
         /// 写入缓存（无过期时间）
@@ -38,10 +22,16 @@ namespace SD.CacheManager
         /// <param name="value">值</param>
         public void Set<T>(string key, T value)
         {
-            using (IRedisClient redisClient = this._clientsManager.GetClient())
+            //如果缓存已存在则清空
+            if (MemoryCache.Default.Get(key) != null)
             {
-                redisClient.Set(key, value);
+                MemoryCache.Default.Remove(key);
             }
+
+            CacheItemPolicy policy = new CacheItemPolicy();
+            policy.Priority = CacheItemPriority.NotRemovable;
+
+            MemoryCache.Default.Set(key, value, policy);
         }
         #endregion
 
@@ -55,10 +45,16 @@ namespace SD.CacheManager
         /// <param name="exp">过期时间</param>
         public void Set<T>(string key, T value, DateTime exp)
         {
-            using (IRedisClient redisClient = this._clientsManager.GetClient())
+            //如果缓存已存在则清空
+            if (MemoryCache.Default.Get(key) != null)
             {
-                redisClient.Set(key, value, exp);
+                MemoryCache.Default.Remove(key);
             }
+
+            CacheItemPolicy policy = new CacheItemPolicy();
+            policy.AbsoluteExpiration = exp;
+
+            MemoryCache.Default.Set(key, value, policy);
         }
         #endregion
 
@@ -71,10 +67,7 @@ namespace SD.CacheManager
         /// <returns>值</returns>
         public T Get<T>(string key)
         {
-            using (IRedisClient redisClient = this._clientsManager.GetReadOnlyClient())
-            {
-                return redisClient.Get<T>(key);
-            }
+            return (T)MemoryCache.Default.Get(key);
         }
         #endregion
 
@@ -85,10 +78,7 @@ namespace SD.CacheManager
         /// <param name="key">键</param>
         public void Remove(string key)
         {
-            using (IRedisClient redisClient = this._clientsManager.GetClient())
-            {
-                redisClient.Remove(key);
-            }
+            MemoryCache.Default.Remove(key);
         }
         #endregion
 
@@ -99,9 +89,9 @@ namespace SD.CacheManager
         /// <param name="keys">缓存键集</param>
         public void RemoveRange(IEnumerable<string> keys)
         {
-            using (IRedisClient redisClient = this._clientsManager.GetClient())
+            foreach (string key in keys)
             {
-                redisClient.RemoveAll(keys);
+                this.Remove(key);
             }
         }
         #endregion
@@ -119,19 +109,6 @@ namespace SD.CacheManager
         }
         #endregion
 
-        #region # 清空缓存 —— void Clear()
-        /// <summary>
-        /// 清空缓存
-        /// </summary>
-        public void Clear()
-        {
-            using (IRedisClient redisClient = this._clientsManager.GetClient())
-            {
-                redisClient.FlushDb();
-            }
-        }
-        #endregion
-
         #region # 是否存在缓存 —— bool Exists(string key)
         /// <summary>
         /// 是否存在缓存
@@ -140,10 +117,7 @@ namespace SD.CacheManager
         /// <returns>是否存在</returns>
         public bool Exists(string key)
         {
-            using (IRedisClient redisClient = this._clientsManager.GetReadOnlyClient())
-            {
-                return redisClient.ContainsKey(key);
-            }
+            return MemoryCache.Default.Contains(key);
         }
         #endregion
 
@@ -155,14 +129,24 @@ namespace SD.CacheManager
         /// <returns>缓存键列表</returns>
         public IEnumerable<string> GetKeys(string pattern)
         {
+            IEnumerable<string> allKeys = MemoryCache.Default.ToArray().Select(x => x.Key);
+
             if (string.IsNullOrWhiteSpace(pattern))
             {
                 return new string[0];
             }
-            using (IRedisClient redisClient = this._clientsManager.GetReadOnlyClient())
+
+            ICollection<string> specKeys = new HashSet<string>();
+
+            foreach (string key in allKeys)
             {
-                return redisClient.SearchKeys(pattern);
+                if (Regex.IsMatch(key, pattern))
+                {
+                    specKeys.Add(key);
+                }
             }
+
+            return specKeys;
         }
         #endregion
 
@@ -172,10 +156,7 @@ namespace SD.CacheManager
         /// </summary>
         public void Dispose()
         {
-            if (this._clientsManager != null)
-            {
-                this._clientsManager.Dispose();
-            }
+
         }
         #endregion
     }

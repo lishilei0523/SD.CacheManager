@@ -80,9 +80,9 @@
       <Project>{9f9d95b0-7e4c-4138-9468-c881720b5572}</Project>
       <Name>SD.CacheManager.NET4</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\SD.CacheManager.Redis\SD.CacheManager.Redis.csproj">
+    <ProjectReference Include="..\..\src\SD.CacheManager.Redis.ServiceStack\SD.CacheManager.Redis.ServiceStack.csproj">
       <Project>{9d3130ad-05d6-40f1-8b40-f516fe52af42}</Project>
-      <Name>SD.CacheManager.Redis</Name>
+      <Name>SD.CacheManager.Redis.ServiceStack</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

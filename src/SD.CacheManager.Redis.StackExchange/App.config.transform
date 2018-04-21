@@ -1,0 +1,8 @@
+﻿<configuration>
+  <configSections>
+    <!--缓存提供者配置节点-->
+    <section name="cacheProviderConfiguration" type="SD.CacheManager.CacheProviderConfiguration, SD.CacheManager"/>
+  </configSections>
+  <!--缓存提供者配置，Redis缓存-->
+  <cacheProviderConfiguration type="SD.CacheManager.RedisProvider" assembly="SD.CacheManager.Redis"/>
+</configuration>

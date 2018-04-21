@@ -1,9 +1,8 @@
-﻿using System;
+﻿using SD.CacheManager.Interface;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Caching;
-using System.Text.RegularExpressions;
-using SD.CacheManager.Interface;
 
 // ReSharper disable once CheckNamespace
 namespace SD.CacheManager
@@ -96,19 +95,6 @@ namespace SD.CacheManager
         }
         #endregion
 
-        #region # 移除缓存 —— void RemoveRange(string keyPattern)
-        /// <summary>
-        /// 移除缓存
-        /// </summary>
-        /// <param name="keyPattern">缓存键表达式</param>
-        public void RemoveRange(string keyPattern)
-        {
-            IEnumerable<string> specKeys = this.GetKeys(keyPattern);
-
-            this.RemoveRange(specKeys);
-        }
-        #endregion
-
         #region # 清空缓存 —— void Clear()
         /// <summary>
         /// 清空缓存
@@ -131,35 +117,6 @@ namespace SD.CacheManager
         public bool Exists(string key)
         {
             return MemoryCache.Default.Contains(key);
-        }
-        #endregion
-
-        #region # 获取缓存键列表 —— IEnumerable<string> GetKeys(string pattern)
-        /// <summary>
-        /// 获取缓存键列表
-        /// </summary>
-        /// <param name="pattern">正则表达式</param>
-        /// <returns>缓存键列表</returns>
-        public IEnumerable<string> GetKeys(string pattern)
-        {
-            IEnumerable<string> allKeys = MemoryCache.Default.ToArray().Select(x => x.Key);
-
-            if (string.IsNullOrWhiteSpace(pattern))
-            {
-                return new string[0];
-            }
-
-            ICollection<string> specKeys = new HashSet<string>();
-
-            foreach (string key in allKeys)
-            {
-                if (Regex.IsMatch(key, pattern))
-                {
-                    specKeys.Add(key);
-                }
-            }
-
-            return specKeys;
         }
         #endregion
 

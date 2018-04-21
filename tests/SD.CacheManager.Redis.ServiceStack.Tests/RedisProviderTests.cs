@@ -1,14 +1,13 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Threading.Tasks;
 
-namespace SD.CacheManager.Memcached.Tests
+namespace SD.CacheManager.Redis.Tests
 {
     /// <summary>
     /// 缓存测试
     /// </summary>
     [TestClass]
-    public class MemcachedProviderTests
+    public class RedisProviderTests
     {
         /// <summary>
         /// 初始化测试
@@ -25,7 +24,7 @@ namespace SD.CacheManager.Memcached.Tests
         [TestMethod]
         public void TestSetAndGetCache()
         {
-            for (int index = 0; index < 100; index++)
+            for (int index = 0; index < 1000; index++)
             {
                 string cacheKey = Guid.NewGuid().ToString();
                 string cacheValue = Guid.NewGuid().ToString();
@@ -35,24 +34,6 @@ namespace SD.CacheManager.Memcached.Tests
                 string value = CacheMediator.Get<string>(cacheKey);
                 Assert.IsTrue(value == cacheValue);
             }
-        }
-
-        /// <summary>
-        /// 测试插入与读取缓存
-        /// </summary>
-        [TestMethod]
-        public void TestSetAndGetCacheParallel()
-        {
-            Parallel.For(0, 100, index =>
-            {
-                string cacheKey = Guid.NewGuid().ToString();
-                string cacheValue = Guid.NewGuid().ToString();
-
-                CacheMediator.Set(cacheKey, cacheValue);
-
-                string value = CacheMediator.Get<string>(cacheKey);
-                Assert.IsTrue(value == cacheValue);
-            });
         }
 
         /// <summary>

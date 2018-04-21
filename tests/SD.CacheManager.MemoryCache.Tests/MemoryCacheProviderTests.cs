@@ -1,14 +1,16 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
-namespace SD.CacheManager.Memcached.Tests
+namespace SD.CacheManager.MemoryCache.Tests
 {
     /// <summary>
     /// 缓存测试
     /// </summary>
     [TestClass]
-    public class MemcachedProviderTests
+    public class MemoryCacheProviderTests
     {
         /// <summary>
         /// 初始化测试
@@ -16,7 +18,10 @@ namespace SD.CacheManager.Memcached.Tests
         [TestInitialize]
         public void Init()
         {
-
+            foreach (KeyValuePair<string, object> kv in System.Runtime.Caching.MemoryCache.Default.ToArray())
+            {
+                System.Runtime.Caching.MemoryCache.Default.Remove(kv.Key);
+            }
         }
 
         /// <summary>
@@ -25,7 +30,7 @@ namespace SD.CacheManager.Memcached.Tests
         [TestMethod]
         public void TestSetAndGetCache()
         {
-            for (int index = 0; index < 100; index++)
+            for (int index = 0; index < 1000; index++)
             {
                 string cacheKey = Guid.NewGuid().ToString();
                 string cacheValue = Guid.NewGuid().ToString();
@@ -43,7 +48,7 @@ namespace SD.CacheManager.Memcached.Tests
         [TestMethod]
         public void TestSetAndGetCacheParallel()
         {
-            Parallel.For(0, 100, index =>
+            Parallel.For(0, 1000, index =>
             {
                 string cacheKey = Guid.NewGuid().ToString();
                 string cacheValue = Guid.NewGuid().ToString();
@@ -100,7 +105,10 @@ namespace SD.CacheManager.Memcached.Tests
         [TestCleanup]
         public void TestFinalize()
         {
-
+            foreach (KeyValuePair<string, object> kv in System.Runtime.Caching.MemoryCache.Default.ToArray())
+            {
+                System.Runtime.Caching.MemoryCache.Default.Remove(kv.Key);
+            }
         }
     }
 }

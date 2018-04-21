@@ -38,12 +38,7 @@
     <DocumentationFile>bin\Release\SD.CacheManager.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Runtime.Caching" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Configuration\CacheProviderConfiguration.cs" />
+    <Compile Include="Configurations\CacheProviderConfiguration.cs" />
     <Compile Include="Providers\MemoryCacheProvider.cs" />
     <Compile Include="Interface\ICacheAdapter.cs" />
     <Compile Include="Mediator\CacheMediator.cs" />
@@ -53,6 +48,11 @@
   <ItemGroup>
     <None Include="App.config.transform" />
     <None Include="Web.config.transform" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Runtime.Caching" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

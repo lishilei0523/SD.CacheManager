@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>SD.CacheManager.Redis</AssemblyName>
+    <RootNamespace>SD.CacheManager.Redis</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="SD.Toolkits.Redis.StackExchange" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SD.CacheManager\SD.CacheManager.csproj" />
+  </ItemGroup>
+
+</Project>
