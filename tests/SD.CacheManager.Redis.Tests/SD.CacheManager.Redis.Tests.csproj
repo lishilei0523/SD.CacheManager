@@ -72,9 +72,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\SD.CacheManager.Redis.StackExchange\SD.CacheManager.Redis.StackExchange.csproj">
+    <ProjectReference Include="..\..\src\SD.CacheManager.Redis\SD.CacheManager.Redis.csproj">
       <Project>{6640523c-1490-4f06-b05f-1ff6979ada1a}</Project>
-      <Name>SD.CacheManager.Redis.StackExchange</Name>
+      <Name>SD.CacheManager.Redis</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\SD.CacheManager\SD.CacheManager.csproj">
       <Project>{7d65692a-c9fc-480a-95a6-51255db9a40a}</Project>

@@ -36,13 +36,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SD.CacheManager.MemoryCache
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 - NET Standard", "02 - NET Standard", "{46120876-48B4-4059-AB94-78C94F9F8BD2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.CacheManager.Redis.StackExchange", "src\SD.CacheManager.Redis.StackExchange\SD.CacheManager.Redis.StackExchange.csproj", "{6640523C-1490-4F06-B05F-1FF6979ADA1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SD.CacheManager.Redis", "src\SD.CacheManager.Redis.\SD.CacheManager.Redis.csproj", "{6640523C-1490-4F06-B05F-1FF6979ADA1A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04 - NET Standard Tests", "04 - NET Standard Tests", "{976EF67B-143E-4E19-A4ED-509510B5C4A3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.CacheManager.MemoryCache.Tests", "tests\SD.CacheManager.MemoryCache.Tests\SD.CacheManager.MemoryCache.Tests.csproj", "{02BE992C-BC52-4A71-BE7B-8D2A1A2617A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.CacheManager.Redis.StackExchange.Tests", "tests\SD.CacheManager.Redis.StackExchange.Tests\SD.CacheManager.Redis.StackExchange.Tests.csproj", "{47E52568-2D4A-40F5-AECE-753AAF76ABE8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.CacheManager.Redis.Tests", "tests\SD.CacheManager.Redis.Tests\SD.CacheManager.Redis.Tests.csproj", "{47E52568-2D4A-40F5-AECE-753AAF76ABE8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
