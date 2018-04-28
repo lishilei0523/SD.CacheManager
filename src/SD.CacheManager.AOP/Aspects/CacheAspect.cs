@@ -1,9 +1,9 @@
-﻿using System;
+﻿using ArxOne.MrAdvice.Advice;
+using Newtonsoft.Json;
+using System;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
-using Newtonsoft.Json;
-using PostSharp.Aspects;
 
 namespace SD.CacheManager.AOP.Aspects
 {
@@ -12,7 +12,7 @@ namespace SD.CacheManager.AOP.Aspects
     /// </summary>
     [Serializable]
     [AttributeUsage(AttributeTargets.Constructor | AttributeTargets.Method, AllowMultiple = true)]
-    public sealed class CacheAspect : OnMethodBoundaryAspect
+    public sealed class CacheAspect : Attribute, IMethodAdvice
     {
         #region # 字段及构造器
 
@@ -35,95 +35,123 @@ namespace SD.CacheManager.AOP.Aspects
 
         //Public
 
-        #region # 方法进入事件 —— void OnEntry(MethodExecutionArgs args)
+        #region # 拦截方法 —— void Advise(MethodAdviceContext context)
         /// <summary>
-        /// 方法进入事件
+        /// 拦截方法
         /// </summary>
-        /// <param name="args">方法元数据</param>
-        public override void OnEntry(MethodExecutionArgs args)
+        /// <param name="context">方法元数据</param>
+        public void Advise(MethodAdviceContext context)
         {
-            string cacheKey = this.BuildCacheKey(args);
-
-            object returnValue = CacheMediator.Get<object>(cacheKey);
-
-            if (returnValue != null)
+            try
             {
-                CacheMediator.Set(cacheKey, returnValue, DateTime.Now.AddMinutes(this._expireSpan));
-                args.FlowBehavior = FlowBehavior.Return;
-                args.ReturnValue = returnValue;
+                bool hasCache = this.OnEntry(context);
+
+                if (!hasCache)
+                {
+                    context.Proceed();
+                    this.OnExit(context);
+                }
             }
-        }
-        #endregion
-
-        #region # 方法异常事件 —— void OnException(MethodExecutionArgs args)
-        /// <summary>
-        /// 方法异常事件
-        /// </summary>
-        /// <param name="args">方法元数据</param>
-        public override void OnException(MethodExecutionArgs args)
-        {
-            args.FlowBehavior = FlowBehavior.Default;
-            throw args.Exception;
-        }
-        #endregion
-
-        #region # 方法结束事件 —— void OnExit(MethodExecutionArgs args)
-        /// <summary>
-        /// 方法结束事件
-        /// </summary>
-        /// <param name="args"></param>
-        public override void OnExit(MethodExecutionArgs args)
-        {
-            if (args.ReturnValue == null)
+            catch (Exception exception)
             {
-                return;
+                this.OnException(context, exception);
+                throw;
             }
 
-            string cacheKey = this.BuildCacheKey(args);
-
-            if (!this._expireSpan.Equals(-1))
-            {
-                CacheMediator.Set(cacheKey, args.ReturnValue, DateTime.Now.AddMinutes(this._expireSpan));
-            }
-            else
-            {
-                CacheMediator.Set(cacheKey, args.ReturnValue);
-            }
         }
         #endregion
 
 
         //Private
 
-        #region # 构造缓存键 —— string BuildCacheKey(MethodExecutionArgs args)
+        #region # 方法进入事件 —— bool OnEntry(MethodAdviceContext context)
+        /// <summary>
+        /// 方法进入事件
+        /// </summary>
+        /// <param name="context">方法元数据</param>
+        private bool OnEntry(MethodAdviceContext context)
+        {
+            bool hasCache = false;
+            string cacheKey = this.BuildCacheKey(context);
+            object returnValue = CacheMediator.Get<object>(cacheKey);
+
+            if (returnValue != null)
+            {
+                CacheMediator.Set(cacheKey, returnValue, DateTime.Now.AddMinutes(this._expireSpan));
+                context.ReturnValue = returnValue;
+                hasCache = true;
+            }
+
+            return hasCache;
+        }
+        #endregion
+
+        #region # 方法异常事件 —— void OnException(MethodExecutionArgs args...
+        /// <summary>
+        /// 方法异常事件
+        /// </summary>
+        /// <param name="context">方法元数据</param>
+        /// <param name="exception">异常</param>
+        private void OnException(MethodAdviceContext context, Exception exception)
+        {
+            throw exception;
+        }
+        #endregion
+
+        #region # 方法结束事件 —— void OnExit(MethodAdviceContext context)
+        /// <summary>
+        /// 方法结束事件
+        /// </summary>
+        /// <param name="context">方法元数据</param>
+        private void OnExit(MethodAdviceContext context)
+        {
+            if (context.ReturnValue == null)
+            {
+                return;
+            }
+
+            string cacheKey = this.BuildCacheKey(context);
+
+            if (!this._expireSpan.Equals(-1))
+            {
+                CacheMediator.Set(cacheKey, context.ReturnValue, DateTime.Now.AddMinutes(this._expireSpan));
+            }
+            else
+            {
+                CacheMediator.Set(cacheKey, context.ReturnValue);
+            }
+        }
+        #endregion
+
+        #region # 构造缓存键 —— string BuildCacheKey(MethodAdviceContext context)
         /// <summary>
         /// 构造缓存键
         /// </summary>
-        /// <param name="args">方法元数据</param>
+        /// <param name="context">方法元数据</param>
         /// <returns>缓存键</returns>
-        private string BuildCacheKey(MethodExecutionArgs args)
+        private string BuildCacheKey(MethodAdviceContext context)
         {
             StringBuilder keyBuilder = new StringBuilder();
 
             //01.方法签名部分
-            keyBuilder.Append(args.Method.DeclaringType.FullName);
-            keyBuilder.Append(args.Method.Name);
+            keyBuilder.Append(context.TargetMethod.DeclaringType.FullName);
+            keyBuilder.Append(context.TargetMethod.Name);
 
             //泛型参数
-            foreach (Type genericArg in args.Method.GetGenericArguments())
+            foreach (Type genericArg in context.TargetMethod.GetGenericArguments())
             {
                 keyBuilder.Append(genericArg.FullName);
             }
 
             //参数
-            foreach (ParameterInfo param in args.Method.GetParameters())
+            foreach (ParameterInfo param in context.TargetMethod.GetParameters())
             {
                 keyBuilder.Append(param.Name);
                 keyBuilder.Append(param.ParameterType.FullName);
             }
 
             //02.方法参数值部分
-            foreach (object argument in args.Arguments)
+            foreach (object argument in context.Arguments)
             {
                 keyBuilder.Append(this.GetJson(argument));
             }
@@ -133,21 +161,21 @@ namespace SD.CacheManager.AOP.Aspects
             string keyMD5 = this.GetMD5(key);
 
             //构造最终键
-            string finalKey = string.Format("{0}.{1}/{2}", args.Method.DeclaringType.FullName, args.Method.Name, keyMD5);
+            string finalKey = string.Format("{0}.{1}/{2}", context.TargetMethod.DeclaringType.FullName, context.TargetMethod.Name, keyMD5);
 
             return finalKey;
         }
         #endregion
 
-        #region # 计算字符串MD5值 —— string GetMD5( string str)
+        #region # 计算字符串MD5值 —— string GetMD5(string text)
         /// <summary>
         /// 计算字符串MD5值
         /// </summary>
-        /// <param name="str">待转换的字符串</param>
+        /// <param name="text">待转换的字符串</param>
         /// <returns>MD5值</returns>
-        private string GetMD5(string str)
+        private string GetMD5(string text)
         {
-            byte[] buffer = Encoding.Default.GetBytes(str);
+            byte[] buffer = Encoding.Default.GetBytes(text);
             using (MD5 md5 = MD5.Create())
             {
                 buffer = md5.ComputeHash(buffer);

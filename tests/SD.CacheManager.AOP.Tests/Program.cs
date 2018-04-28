@@ -11,7 +11,7 @@ namespace SD.CacheManager.AOP.Tests
             string product1 = GetProduct("苹果");
             Trace.WriteLine(product1);
 
-            string product2 = GetProduct("香蕉");
+            string product2 = GetProduct("苹果");
             Trace.WriteLine(product2);
 
             string product3 = GetProduct("橘子");
