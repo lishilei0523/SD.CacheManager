@@ -1,4 +1,0 @@
-﻿<configuration>
-  <!--缓存提供者配置-->
-  <cacheProviderConfiguration type="SD.CacheManager.RedisProvider" assembly="SD.CacheManager.Redis"/>
-</configuration>
