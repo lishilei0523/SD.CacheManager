@@ -38,16 +38,26 @@
     <DocumentationFile>bin\Release\SD.CacheManager.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Configurations\CacheProviderConfiguration.cs" />
-    <Compile Include="Providers\MemoryCacheProvider.cs" />
-    <Compile Include="Interface\ICacheAdapter.cs" />
-    <Compile Include="Mediator\CacheMediator.cs" />
-    <Compile Include="Providers\NullProvider.cs" />
+    <Compile Include="..\SD.CacheManager\Configurations\CacheProviderConfiguration.cs">
+      <Link>Configurations\CacheProviderConfiguration.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\SD.CacheManager.MemoryCache\Providers\MemoryCacheProvider.cs">
+      <Link>Providers\MemoryCacheProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\SD.CacheManager\Interface\ICacheAdapter.cs">
+      <Link>Interface\ICacheAdapter.cs</Link>
+    </Compile>
+    <Compile Include="..\SD.CacheManager\Mediator\CacheMediator.cs">
+      <Link>Mediator\CacheMediator.cs</Link>
+    </Compile>
+    <Compile Include="..\SD.CacheManager\Providers\NullProvider.cs">
+      <Link>Providers\NullProvider.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config.transform" />
-    <None Include="Web.config.transform" />
+    <None Include="..\SD.CacheManager\App.config.transform" />
+    <None Include="..\SD.CacheManager\Web.config.transform" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

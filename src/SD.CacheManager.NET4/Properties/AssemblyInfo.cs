@@ -7,9 +7,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("SD.CacheManager")]
 [assembly: AssemblyDescription("缓存组件")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("SD")]
 [assembly: AssemblyProduct("SD.CacheManager")]
-[assembly: AssemblyCopyright("Copyright © SD 2017")]
+[assembly: AssemblyCopyright("Copyright © SD 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -30,5 +30,5 @@ using System.Runtime.InteropServices;
 //
 // 可以指定所有这些值，也可以使用“生成号”和“修订号”的默认值，
 // 方法是按如下所示使用“*”: 
-[assembly: AssemblyVersion("1.0.0")]
+[assembly: AssemblyVersion("2.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
