@@ -20,7 +20,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Runtime.Caching" Version="4.5.0-preview2-26406-04" />
+    <PackageReference Include="System.Runtime.Caching" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup>
