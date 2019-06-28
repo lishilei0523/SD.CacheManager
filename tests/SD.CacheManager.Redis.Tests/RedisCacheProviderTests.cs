@@ -1,5 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SD.Toolkits.Redis;
+using StackExchange.Redis;
 using System;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace SD.CacheManager.Redis.StackExchange.Tests
@@ -16,12 +19,12 @@ namespace SD.CacheManager.Redis.StackExchange.Tests
         [TestInitialize]
         public void Init()
         {
-            //EndPoint[] endpoints = RedisManager.Instance.GetEndPoints();
-            //foreach (EndPoint endpoint in endpoints)
-            //{
-            //    IServer server = RedisManager.Instance.GetServer(endpoint);
-            //    server.FlushAllDatabases();
-            //}
+            EndPoint[] endpoints = RedisManager.Instance.GetEndPoints();
+            foreach (EndPoint endpoint in endpoints)
+            {
+                IServer server = RedisManager.Instance.GetServer(endpoint);
+                server.FlushAllDatabases();
+            }
         }
 
         /// <summary>
@@ -105,12 +108,12 @@ namespace SD.CacheManager.Redis.StackExchange.Tests
         [TestCleanup]
         public void TestFinalize()
         {
-            //EndPoint[] endpoints = RedisManager.Instance.GetEndPoints();
-            //foreach (EndPoint endpoint in endpoints)
-            //{
-            //    IServer server = RedisManager.Instance.GetServer(endpoint);
-            //    server.FlushAllDatabases();
-            //}
+            EndPoint[] endpoints = RedisManager.Instance.GetEndPoints();
+            foreach (EndPoint endpoint in endpoints)
+            {
+                IServer server = RedisManager.Instance.GetServer(endpoint);
+                server.FlushAllDatabases();
+            }
         }
     }
 }
