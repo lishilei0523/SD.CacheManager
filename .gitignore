@@ -191,3 +191,4 @@ ModelManifest.xml
 *.ide
 *.ide-shm
 *.ide-wal
+*.dtbcache
