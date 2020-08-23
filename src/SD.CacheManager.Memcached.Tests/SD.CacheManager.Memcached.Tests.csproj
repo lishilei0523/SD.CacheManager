@@ -58,9 +58,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\SD.CacheManager.Memcached\SD.CacheManager.Memcached.csproj">
+    <ProjectReference Include="..\SD.CacheManager.Memcached.NET4\SD.CacheManager.Memcached.NET4.csproj">
       <Project>{1cf78eef-dd6d-415f-acd3-184bc138d086}</Project>
-      <Name>SD.CacheManager.Memcached</Name>
+      <Name>SD.CacheManager.Memcached.NET4</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\SD.CacheManager.NET4\SD.CacheManager.NET4.csproj">
       <Project>{9f9d95b0-7e4c-4138-9468-c881720b5572}</Project>

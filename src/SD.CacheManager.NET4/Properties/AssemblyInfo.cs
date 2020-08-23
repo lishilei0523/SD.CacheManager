@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("SD")]
 [assembly: AssemblyProduct("SD.CacheManager")]
-[assembly: AssemblyCopyright("Copyright © SD 2018")]
+[assembly: AssemblyCopyright("Copyright © SD 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

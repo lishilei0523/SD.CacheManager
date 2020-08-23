@@ -27,7 +27,7 @@ namespace SD.CacheManager
         /// </summary>
         static MemcachedProvider()
         {
-            MemcachedClientConfiguration config = new MemcachedClientConfiguration(null, null);
+            MemcachedClientConfiguration config = new MemcachedClientConfiguration();
 
             foreach (ServerElement element in MemcachedConfiguration.Setting.MemcachedServers)
             {
@@ -50,7 +50,7 @@ namespace SD.CacheManager
         /// </summary>
         public MemcachedProvider()
         {
-            this._memcachedClient = new MemcachedClient(null, _MemcachedClientConfig);
+            this._memcachedClient = new MemcachedClient(_MemcachedClientConfig);
         }
 
         #endregion

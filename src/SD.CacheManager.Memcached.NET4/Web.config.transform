@@ -1,0 +1,15 @@
+﻿<configuration>
+  <configSections>
+    <!--Memcached服务器配置节点-->
+    <section name="memcachedConfiguration" type="SD.CacheManager.MemcachedConfiguration,SD.CacheManager.Memcached"/>
+  </configSections>
+  <!--缓存提供者配置-->
+  <cacheProviderConfiguration type="SD.CacheManager.MemcachedProvider" assembly="SD.CacheManager.Memcached"/>
+  <!--Memcached服务器配置-->
+  <memcachedConfiguration>
+    <!--服务器地址列表-->
+    <memcachedServers>
+      <server host="ServerName" port="11211" />
+    </memcachedServers>
+  </memcachedConfiguration>
+</configuration>

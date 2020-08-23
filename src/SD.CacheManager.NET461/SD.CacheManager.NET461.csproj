@@ -32,6 +32,9 @@
     <DocumentationFile>bin\Release\SD.CacheManager.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\SD.CacheManager.NET4\Properties\AssemblyInfo.cs">
+      <Link>Properties\AssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="..\SD.CacheManager\Configurations\CacheProviderConfiguration.cs">
       <Link>Configurations\CacheProviderConfiguration.cs</Link>
     </Compile>
@@ -53,9 +56,6 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
