@@ -32,12 +32,6 @@
     <DocumentationFile>bin\Release\SD.CacheManager.AOP.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MrAdvice, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c0e7e6eab6f293d8, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\MrAdvice.2.8.5\lib\net40-client\MrAdvice.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
@@ -50,15 +44,18 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\SD.CacheManager.AOP.NET45\packages.config">
-      <Link>packages.config</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\SD.CacheManager.NET461\SD.CacheManager.NET461.csproj">
       <Project>{83326a90-286d-4346-b416-48f46d8f1e85}</Project>
       <Name>SD.CacheManager.NET461</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MrAdvice">
+      <Version>2.8.5</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.2</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

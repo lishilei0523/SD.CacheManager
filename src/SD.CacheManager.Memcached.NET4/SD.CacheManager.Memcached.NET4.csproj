@@ -34,24 +34,21 @@
     <DocumentationFile>bin\Release\SD.CacheManager.Memcached.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Enyim.Caching, Version=2.16.0.0, Culture=neutral, PublicKeyToken=cec98615db04012e, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\EnyimMemcached.2.16.0\lib\net35\Enyim.Caching.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\SD.CacheManager.Memcached\Configuration\ServerElement.cs" >
+    <Compile Include="..\SD.CacheManager.Memcached\Configuration\ServerElement.cs">
       <Link>Configuration\ServerElement.cs</Link>
     </Compile>
-    <Compile Include="..\SD.CacheManager.Memcached\Configuration\ServerElementCollection.cs" >
+    <Compile Include="..\SD.CacheManager.Memcached\Configuration\ServerElementCollection.cs">
       <Link>Configuration\ServerElementCollection.cs</Link>
     </Compile>
-    <Compile Include="..\SD.CacheManager.Memcached\Configuration\MemcachedConfiguration.cs" >
+    <Compile Include="..\SD.CacheManager.Memcached\Configuration\MemcachedConfiguration.cs">
       <Link>Configuration\MemcachedConfiguration.cs</Link>
     </Compile>
-    <Compile Include="..\SD.CacheManager.Memcached\Toolkits\MemcachedTool.cs" >
+    <Compile Include="..\SD.CacheManager.Memcached\Toolkits\MemcachedTool.cs">
       <Link>Toolkits\MemcachedTool.cs</Link>
     </Compile>
     <Compile Include="Provider\MemcachedProvider.cs" />
@@ -64,15 +61,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="..\SD.CacheManager.Memcached\App.config.transform" >
+    <None Include="..\SD.CacheManager.Memcached\App.config.transform">
       <Link>App.config.transform</Link>
     </None>
-    <None Include="..\SD.CacheManager.Memcached\Web.config.transform" >
+    <None Include="..\SD.CacheManager.Memcached\Web.config.transform">
       <Link>Web.config.transform</Link>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="EnyimMemcached">
+      <Version>2.16.0</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
