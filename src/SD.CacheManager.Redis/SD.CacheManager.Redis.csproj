@@ -1,12 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>SD.CacheManager.Redis</AssemblyName>
     <RootNamespace>SD.CacheManager.Redis</RootNamespace>
     <Authors>Lee</Authors>
     <Company>SD</Company>
-    <Copyright>Copyright © SD 2018</Copyright>
+    <Copyright>Copyright © SD 2021</Copyright>
     <Description>缓存组件 - Redis实现</Description>
     <Version>2.0.1</Version>
     <FileVersion>2.0.0.0</FileVersion>
@@ -16,7 +15,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\Debug\netstandard2.0\SD.CacheManager.Redis.xml</DocumentationFile>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>bin\Release\netstandard2.0\SD.CacheManager.Redis.xml</DocumentationFile>
   </PropertyGroup>
@@ -29,5 +27,4 @@
   <ItemGroup>
     <ProjectReference Include="..\SD.CacheManager\SD.CacheManager.csproj" />
   </ItemGroup>
-
 </Project>
