@@ -50,9 +50,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SD.CacheManager.NET461\SD.CacheManager.NET461.csproj">
-      <Project>{83326a90-286d-4346-b416-48f46d8f1e85}</Project>
-      <Name>SD.CacheManager.NET461</Name>
+    <ProjectReference Include="..\SD.CacheManager.NET4\SD.CacheManager.NET4.csproj">
+      <Project>{9f9d95b0-7e4c-4138-9468-c881720b5572}</Project>
+      <Name>SD.CacheManager.NET4</Name>
     </ProjectReference>
     <ProjectReference Include="..\SD.CacheManager.Redis.NET461\SD.CacheManager.Redis.NET461.csproj">
       <Project>{0d893331-a18f-4421-b80d-4011577a261e}</Project>

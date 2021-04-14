@@ -52,18 +52,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SD.CacheManager.NET461\SD.CacheManager.NET461.csproj">
-      <Project>{83326a90-286d-4346-b416-48f46d8f1e85}</Project>
-      <Name>SD.CacheManager.NET461</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.3</Version>
     </PackageReference>
     <PackageReference Include="SD.Toolkits.Redis">
       <Version>2.0.3</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SD.CacheManager.NET4\SD.CacheManager.NET4.csproj">
+      <Project>{9f9d95b0-7e4c-4138-9468-c881720b5572}</Project>
+      <Name>SD.CacheManager.NET4</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

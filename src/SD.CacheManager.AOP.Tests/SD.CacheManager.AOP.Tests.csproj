@@ -52,13 +52,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SD.CacheManager.AOP.NET461\SD.CacheManager.AOP.NET461.csproj">
-      <Project>{39dd1247-c4f5-4b3f-8e83-ce5556108325}</Project>
-      <Name>SD.CacheManager.AOP.NET461</Name>
+    <ProjectReference Include="..\SD.CacheManager.AOP.NET45\SD.CacheManager.AOP.NET45.csproj">
+      <Project>{ef5cf992-0567-4fb7-aee6-ad1360fda102}</Project>
+      <Name>SD.CacheManager.AOP.NET45</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SD.CacheManager.NET461\SD.CacheManager.NET461.csproj">
-      <Project>{83326a90-286d-4346-b416-48f46d8f1e85}</Project>
-      <Name>SD.CacheManager.NET461</Name>
+    <ProjectReference Include="..\SD.CacheManager.NET4\SD.CacheManager.NET4.csproj">
+      <Project>{9f9d95b0-7e4c-4138-9468-c881720b5572}</Project>
+      <Name>SD.CacheManager.NET4</Name>
     </ProjectReference>
     <ProjectReference Include="..\SD.CacheManager.Redis.NET461\SD.CacheManager.Redis.NET461.csproj">
       <Project>{0d893331-a18f-4421-b80d-4011577a261e}</Project>

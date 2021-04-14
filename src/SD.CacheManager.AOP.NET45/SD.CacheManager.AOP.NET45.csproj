@@ -44,18 +44,18 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SD.CacheManager.NET45\SD.CacheManager.NET45.csproj">
-      <Project>{e97d5e7c-c5fc-499a-9a49-59f06b0d5e59}</Project>
-      <Name>SD.CacheManager.NET45</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="MrAdvice">
       <Version>2.8.11</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.3</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SD.CacheManager.NET4\SD.CacheManager.NET4.csproj">
+      <Project>{9f9d95b0-7e4c-4138-9468-c881720b5572}</Project>
+      <Name>SD.CacheManager.NET4</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
