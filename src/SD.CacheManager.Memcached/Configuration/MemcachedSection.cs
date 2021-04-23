@@ -1,6 +1,6 @@
-﻿using System;
+﻿using SD.CacheManager.Memcached.Configuration;
+using System;
 using System.Configuration;
-using SD.CacheManager.Memcached.Configuration;
 
 // ReSharper disable once CheckNamespace
 namespace SD.CacheManager
@@ -8,21 +8,21 @@ namespace SD.CacheManager
     /// <summary>
     /// Memcached服务器配置
     /// </summary>
-    internal class MemcachedConfiguration : ConfigurationSection
+    public class MemcachedSection : ConfigurationSection
     {
         #region # 字段及构造器
 
         /// <summary>
         /// 单例
         /// </summary>
-        private static readonly MemcachedConfiguration _Setting;
+        private static readonly MemcachedSection _Setting;
 
         /// <summary>
         /// 静态构造器
         /// </summary>
-        static MemcachedConfiguration()
+        static MemcachedSection()
         {
-            _Setting = (MemcachedConfiguration)ConfigurationManager.GetSection("memcachedConfiguration");
+            _Setting = (MemcachedSection)ConfigurationManager.GetSection("memcachedConfiguration");
 
             #region # 非空验证
 
@@ -36,11 +36,11 @@ namespace SD.CacheManager
 
         #endregion
 
-        #region # 访问器 —— static MemcachedConfiguration Setting
+        #region # 访问器 —— static MemcachedSection Setting
         /// <summary>
         /// 访问器
         /// </summary>
-        public static MemcachedConfiguration Setting
+        public static MemcachedSection Setting
         {
             get { return _Setting; }
         }

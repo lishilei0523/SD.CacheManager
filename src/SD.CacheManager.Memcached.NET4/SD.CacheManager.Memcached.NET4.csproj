@@ -39,14 +39,14 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SD.CacheManager.Memcached\Configuration\MemcachedSection.cs">
+      <Link>Configuration\MemcachedSection.cs</Link>
+    </Compile>
     <Compile Include="..\SD.CacheManager.Memcached\Configuration\ServerElement.cs">
       <Link>Configuration\ServerElement.cs</Link>
     </Compile>
     <Compile Include="..\SD.CacheManager.Memcached\Configuration\ServerElementCollection.cs">
       <Link>Configuration\ServerElementCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\SD.CacheManager.Memcached\Configuration\MemcachedConfiguration.cs">
-      <Link>Configuration\MemcachedConfiguration.cs</Link>
     </Compile>
     <Compile Include="..\SD.CacheManager.Memcached\Toolkits\MemcachedTool.cs">
       <Link>Toolkits\MemcachedTool.cs</Link>
@@ -59,14 +59,6 @@
       <Project>{9f9d95b0-7e4c-4138-9468-c881720b5572}</Project>
       <Name>SD.CacheManager.NET4</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\SD.CacheManager.Memcached\App.config.transform">
-      <Link>App.config.transform</Link>
-    </None>
-    <None Include="..\SD.CacheManager.Memcached\Web.config.transform">
-      <Link>Web.config.transform</Link>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="EnyimMemcached">

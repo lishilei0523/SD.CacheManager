@@ -5,7 +5,7 @@ namespace SD.CacheManager.Memcached.Configuration
     /// <summary>
     /// 服务器节点集合
     /// </summary>
-    internal class ServerElementCollection : ConfigurationElementCollection
+    public class ServerElementCollection : ConfigurationElementCollection
     {
         /// <summary>
         /// 创建新配置节点

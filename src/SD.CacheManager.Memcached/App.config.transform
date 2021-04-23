@@ -1,10 +1,10 @@
 ﻿<configuration>
   <configSections>
     <!--Memcached服务器配置节点-->
-    <section name="memcachedConfiguration" type="SD.CacheManager.MemcachedConfiguration,SD.CacheManager.Memcached"/>
+    <section name="memcachedConfiguration" type="SD.CacheManager.MemcachedSection, SD.CacheManager.Memcached" />
+    <!--SD.CacheManager配置节点-->
+    <section name="sd.cacheManager" type="SD.CacheManager.CacheManagerSection, SD.CacheManager" />
   </configSections>
-  <!--缓存提供者配置-->
-  <cacheProviderConfiguration type="SD.CacheManager.MemcachedProvider" assembly="SD.CacheManager.Memcached"/>
   <!--Memcached服务器配置-->
   <memcachedConfiguration>
     <!--服务器地址列表-->
@@ -12,4 +12,9 @@
       <server host="ServerName" port="11211" />
     </memcachedServers>
   </memcachedConfiguration>
+  <!--SD.CacheManager配置-->
+  <sd.cacheManager>
+    <!--缓存提供者，Memcached-->
+    <cacheProvider type="SD.CacheManager.MemcachedProvider" assembly="SD.CacheManager.Memcached" />
+  </sd.cacheManager>
 </configuration>

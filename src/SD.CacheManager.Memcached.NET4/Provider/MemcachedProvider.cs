@@ -28,14 +28,12 @@ namespace SD.CacheManager
         static MemcachedProvider()
         {
             MemcachedClientConfiguration config = new MemcachedClientConfiguration();
-
-            foreach (ServerElement element in MemcachedConfiguration.Setting.MemcachedServers)
+            foreach (ServerElement server in MemcachedSection.Setting.MemcachedServers)
             {
-                config.Servers.Add(new IPEndPoint(IPAddress.Parse(element.Host), element.Port));
+                config.Servers.Add(new IPEndPoint(IPAddress.Parse(server.Host), server.Port));
             }
 
             config.Protocol = MemcachedProtocol.Binary;
-
             _MemcachedClientConfig = config;
         }
 

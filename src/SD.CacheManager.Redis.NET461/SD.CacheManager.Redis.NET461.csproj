@@ -41,10 +41,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\SD.CacheManager\App.config.transform" />
-    <None Include="..\SD.CacheManager\Web.config.transform" />
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>

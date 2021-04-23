@@ -31,9 +31,8 @@ namespace SD.CacheManager
             _Sync = new object();
 
             //读取配置文件获取缓存实现
-            Assembly cacheImpAssembly = Assembly.Load(CacheProviderConfiguration.Setting.Assembly);
-
-            _CacheImplType = cacheImpAssembly.GetType(CacheProviderConfiguration.Setting.Type);
+            Assembly cacheImpAssembly = Assembly.Load(CacheManagerSection.Setting.CacheProvider.Assembly);
+            _CacheImplType = cacheImpAssembly.GetType(CacheManagerSection.Setting.CacheProvider.Type);
         }
 
         #endregion

@@ -5,7 +5,7 @@ namespace SD.CacheManager.Memcached.Configuration
     /// <summary>
     /// 服务器节点
     /// </summary>
-    internal class ServerElement : ConfigurationElement
+    public class ServerElement : ConfigurationElement
     {
         #region # 服务器 —— string Host
         /// <summary>

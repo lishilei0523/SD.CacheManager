@@ -29,7 +29,7 @@ namespace SD.CacheManager
         {
             MemcachedClientConfiguration config = new MemcachedClientConfiguration(null, null);
 
-            foreach (ServerElement element in MemcachedConfiguration.Setting.MemcachedServers)
+            foreach (ServerElement element in MemcachedSection.Setting.MemcachedServers)
             {
                 config.Servers.Add(new IPEndPoint(IPAddress.Parse(element.Host), element.Port));
             }

@@ -1,6 +1,6 @@
 ﻿<configuration>
   <configSections>
-    <!--缓存提供者配置节点-->
-    <section name="cacheProviderConfiguration" type="SD.CacheManager.CacheProviderConfiguration,SD.CacheManager"/>
+    <!--SD.CacheManager配置节点-->
+    <section name="sd.cacheManager" type="SD.CacheManager.CacheManagerSection, SD.CacheManager" />
   </configSections>
 </configuration>
