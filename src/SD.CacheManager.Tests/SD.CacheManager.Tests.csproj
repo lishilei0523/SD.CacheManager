@@ -53,17 +53,16 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="..\SD.CacheManager.MemoryCache.Tests\MemoryCacheProviderTests.cs" />
     <Compile Include="ConfigurationTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\SD.CacheManager.NET4\SD.CacheManager.NET4.csproj">
-      <Project>{9F9D95B0-7E4C-4138-9468-C881720B5572}</Project>
-      <Name>SD.CacheManager.NET4</Name>
-    </ProjectReference>
+    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <ProjectReference Include="..\SD.CacheManager\SD.CacheManager.csproj">
+      <Project>{7d65692a-c9fc-480a-95a6-51255db9a40a}</Project>
+      <Name>SD.CacheManager</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
