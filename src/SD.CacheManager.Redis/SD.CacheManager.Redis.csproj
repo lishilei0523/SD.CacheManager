@@ -1,13 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net45;net461;netstandard2.0</TargetFrameworks>
-    <AssemblyName>SD.CacheManager.Redis</AssemblyName>
-    <RootNamespace>SD.CacheManager.Redis</RootNamespace>
+    <TargetFrameworks>net45;net461;net48;netstandard2.0</TargetFrameworks>
     <Authors>Lee</Authors>
     <Company>SD</Company>
-    <Copyright>Copyright © SD 2021</Copyright>
     <Description>SD.CacheManager 缓存组件 - Redis实现</Description>
-    <Version>2.0.1</Version>
+    <Copyright>Copyright © SD 2021</Copyright>
+    <Version>2.0.0</Version>
     <FileVersion>2.0.0.0</FileVersion>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </PropertyGroup>
