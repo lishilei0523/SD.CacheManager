@@ -6,7 +6,7 @@
     <Description>SD.CacheManager 缓存组件</Description>
     <Copyright>Copyright © SD 2021</Copyright>
     <Version>2.0.0</Version>
-    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0</AssemblyVersion>
     <FileVersion>2.0.0.0</FileVersion>
   </PropertyGroup>
 

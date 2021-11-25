@@ -5,7 +5,7 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace SD.CacheManager.Redis.Tests
+namespace SD.CacheManager.Redis.Tests.TestCases
 {
     /// <summary>
     /// 缓存测试

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SD.CacheManager.MemoryCache.Tests
+namespace SD.CacheManager.MemoryCache.Tests.TestCases
 {
     /// <summary>
     /// 缓存测试
