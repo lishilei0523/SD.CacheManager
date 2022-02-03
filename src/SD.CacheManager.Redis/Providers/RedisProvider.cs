@@ -1,5 +1,4 @@
-﻿using SD.CacheManager.Interface;
-using SD.CacheManager.Redis.Toolkits;
+﻿using SD.CacheManager.Redis.Toolkits;
 using SD.Toolkits.Redis;
 using StackExchange.Redis;
 using System;
@@ -72,13 +71,12 @@ namespace SD.CacheManager
         public T Get<T>(string key)
         {
             string json = this._redisClient.StringGet(key);
-
             if (string.IsNullOrWhiteSpace(json))
             {
                 return default(T);
             }
 
-            T instance = json.JsonToObject<T>();
+            T instance = json.AsJsonTo<T>();
 
             return instance;
         }
@@ -102,10 +100,17 @@ namespace SD.CacheManager
         /// <param name="keys">缓存键集</param>
         public void RemoveRange(IEnumerable<string> keys)
         {
+            #region # 验证
+
             keys = keys?.ToArray() ?? new string[0];
+            if (!keys.Any())
+            {
+                return;
+            }
+
+            #endregion
 
             ICollection<RedisKey> redisKeys = new HashSet<RedisKey>();
-
             foreach (string key in keys)
             {
                 redisKeys.Add(key);

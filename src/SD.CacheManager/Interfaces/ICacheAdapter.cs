@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SD.CacheManager.Interface
+// ReSharper disable once CheckNamespace
+namespace SD.CacheManager
 {
     /// <summary>
     /// 缓存适配器接口

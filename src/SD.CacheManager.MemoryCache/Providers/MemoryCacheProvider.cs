@@ -1,9 +1,7 @@
-﻿using SD.CacheManager.Interface;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Caching;
-using System.Text.RegularExpressions;
 
 // ReSharper disable once CheckNamespace
 namespace SD.CacheManager
@@ -28,8 +26,10 @@ namespace SD.CacheManager
                 MemoryCache.Default.Remove(key);
             }
 
-            CacheItemPolicy policy = new CacheItemPolicy();
-            policy.Priority = CacheItemPriority.NotRemovable;
+            CacheItemPolicy policy = new CacheItemPolicy
+            {
+                Priority = CacheItemPriority.NotRemovable
+            };
 
             MemoryCache.Default.Set(key, value, policy);
         }
@@ -67,7 +67,9 @@ namespace SD.CacheManager
         /// <returns>值</returns>
         public T Get<T>(string key)
         {
-            return (T)MemoryCache.Default.Get(key);
+            T instance = (T)MemoryCache.Default.Get(key);
+
+            return instance;
         }
         #endregion
 
@@ -89,23 +91,20 @@ namespace SD.CacheManager
         /// <param name="keys">缓存键集</param>
         public void RemoveRange(IEnumerable<string> keys)
         {
+            #region # 验证
+
+            keys = keys?.Distinct().ToArray() ?? new string[0];
+            if (!keys.Any())
+            {
+                return;
+            }
+
+            #endregion
+
             foreach (string key in keys)
             {
                 this.Remove(key);
             }
-        }
-        #endregion
-
-        #region # 移除缓存 —— void RemoveRange(string keyPattern)
-        /// <summary>
-        /// 移除缓存
-        /// </summary>
-        /// <param name="keyPattern">缓存键表达式</param>
-        public void RemoveRange(string keyPattern)
-        {
-            IEnumerable<string> specKeys = this.GetKeys(keyPattern);
-
-            this.RemoveRange(specKeys);
         }
         #endregion
 
@@ -118,35 +117,6 @@ namespace SD.CacheManager
         public bool Exists(string key)
         {
             return MemoryCache.Default.Contains(key);
-        }
-        #endregion
-
-        #region # 获取缓存键列表 —— IEnumerable<string> GetKeys(string pattern)
-        /// <summary>
-        /// 获取缓存键列表
-        /// </summary>
-        /// <param name="pattern">正则表达式</param>
-        /// <returns>缓存键列表</returns>
-        public IEnumerable<string> GetKeys(string pattern)
-        {
-            IEnumerable<string> allKeys = MemoryCache.Default.ToArray().Select(x => x.Key);
-
-            if (string.IsNullOrWhiteSpace(pattern))
-            {
-                return new string[0];
-            }
-
-            ICollection<string> specKeys = new HashSet<string>();
-
-            foreach (string key in allKeys)
-            {
-                if (Regex.IsMatch(key, pattern))
-                {
-                    specKeys.Add(key);
-                }
-            }
-
-            return specKeys;
         }
         #endregion
 

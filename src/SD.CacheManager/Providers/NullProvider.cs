@@ -1,5 +1,4 @@
-﻿using SD.CacheManager.Interface;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 // ReSharper disable once CheckNamespace
