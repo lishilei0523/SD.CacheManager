@@ -8,10 +8,10 @@ using System.Text;
 namespace SD.CacheManager.AOP.Aspects
 {
     /// <summary>
-    /// 缓存AOP特性类
+    /// 缓存AOP特性
     /// </summary>
     [Serializable]
-    [AttributeUsage(AttributeTargets.Constructor | AttributeTargets.Method, AllowMultiple = true)]
+    [AttributeUsage(AttributeTargets.Constructor | AttributeTargets.Method)]
     public sealed class CacheAspect : Attribute, IMethodAdvice
     {
         #region # 字段及构造器
@@ -19,15 +19,24 @@ namespace SD.CacheManager.AOP.Aspects
         /// <summary>
         /// 缓存时长
         /// </summary>
-        private readonly double _expireSpan;
+        private readonly TimeSpan? _expiredSpan;
 
         /// <summary>
         /// 基础构造器
         /// </summary>
-        /// <param name="expireSpan">缓存时长（单位：分钟，-1表示不过期）</param>
-        public CacheAspect(double expireSpan = 5)
+        /// <param name="expiredSpan">缓存时长（null表示永不过期）</param>
+        public CacheAspect(TimeSpan? expiredSpan = null)
         {
-            this._expireSpan = expireSpan;
+            this._expiredSpan = expiredSpan;
+        }
+
+        /// <summary>
+        /// 基础构造器
+        /// </summary>
+        /// <param name="expiredMinutes">缓存时长（单位：分钟）</param>
+        public CacheAspect(int expiredMinutes = 5)
+        {
+            this._expiredSpan = new TimeSpan(0, expiredMinutes, 0);
         }
 
         #endregion
@@ -42,22 +51,12 @@ namespace SD.CacheManager.AOP.Aspects
         /// <param name="context">方法元数据</param>
         public void Advise(MethodAdviceContext context)
         {
-            try
+            bool hasCache = this.OnEntry(context);
+            if (!hasCache)
             {
-                bool hasCache = this.OnEntry(context);
-
-                if (!hasCache)
-                {
-                    context.Proceed();
-                    this.OnExit(context);
-                }
+                context.Proceed();
+                this.OnExit(context);
             }
-            catch (Exception exception)
-            {
-                this.OnException(context, exception);
-                throw;
-            }
-
         }
         #endregion
 
@@ -74,27 +73,22 @@ namespace SD.CacheManager.AOP.Aspects
             bool hasCache = false;
             string cacheKey = this.BuildCacheKey(context);
             object returnValue = CacheMediator.Get<object>(cacheKey);
-
             if (returnValue != null)
             {
-                CacheMediator.Set(cacheKey, returnValue, DateTime.Now.AddMinutes(this._expireSpan));
+                if (this._expiredSpan.HasValue)
+                {
+                    CacheMediator.Set(cacheKey, returnValue, DateTime.Now.Add(this._expiredSpan.Value));
+                }
+                else
+                {
+                    CacheMediator.Set(cacheKey, returnValue);
+                }
+
                 context.ReturnValue = returnValue;
                 hasCache = true;
             }
 
             return hasCache;
-        }
-        #endregion
-
-        #region # 方法异常事件 —— void OnException(MethodExecutionArgs args...
-        /// <summary>
-        /// 方法异常事件
-        /// </summary>
-        /// <param name="context">方法元数据</param>
-        /// <param name="exception">异常</param>
-        private void OnException(MethodAdviceContext context, Exception exception)
-        {
-            throw exception;
         }
         #endregion
 
@@ -112,9 +106,9 @@ namespace SD.CacheManager.AOP.Aspects
 
             string cacheKey = this.BuildCacheKey(context);
 
-            if (!this._expireSpan.Equals(-1))
+            if (this._expiredSpan.HasValue)
             {
-                CacheMediator.Set(cacheKey, context.ReturnValue, DateTime.Now.AddMinutes(this._expireSpan));
+                CacheMediator.Set(cacheKey, context.ReturnValue, DateTime.Now.Add(this._expiredSpan.Value));
             }
             else
             {
@@ -133,47 +127,48 @@ namespace SD.CacheManager.AOP.Aspects
         {
             StringBuilder keyBuilder = new StringBuilder();
 
-            //01.方法签名部分
-            keyBuilder.Append(context.TargetMethod.DeclaringType.FullName);
+            //方法签名
+            keyBuilder.Append(context.TargetMethod.DeclaringType?.FullName);
             keyBuilder.Append(context.TargetMethod.Name);
 
-            //泛型参数
-            foreach (Type genericArg in context.TargetMethod.GetGenericArguments())
+            //类型参数
+            foreach (Type typeArgument in context.TargetMethod.GetGenericArguments())
             {
-                keyBuilder.Append(genericArg.FullName);
+                keyBuilder.Append(typeArgument.FullName);
             }
 
             //参数
-            foreach (ParameterInfo param in context.TargetMethod.GetParameters())
+            foreach (ParameterInfo parameter in context.TargetMethod.GetParameters())
             {
-                keyBuilder.Append(param.Name);
-                keyBuilder.Append(param.ParameterType.FullName);
+                keyBuilder.Append(parameter.Name);
+                keyBuilder.Append(parameter.ParameterType.FullName);
             }
 
-            //02.方法参数值部分
+            //参数值
             foreach (object argument in context.Arguments)
             {
-                keyBuilder.Append(this.GetJson(argument));
+                string argumentJson = this.GetJson(argument);
+                keyBuilder.Append(argumentJson);
             }
 
-            //03.计算MD5
+            //计算MD5
             string key = keyBuilder.ToString();
-            string keyMD5 = this.GetMD5(key);
+            string keyHash = this.GetHash(key);
 
             //构造最终键
-            string finalKey = string.Format("{0}.{1}/{2}", context.TargetMethod.DeclaringType.FullName, context.TargetMethod.Name, keyMD5);
+            string finalKey = string.Format("{0}.{1}({2})", context.TargetMethod.DeclaringType?.FullName, context.TargetMethod.Name, keyHash);
 
             return finalKey;
         }
         #endregion
 
-        #region # 计算字符串MD5值 —— string GetMD5(string text)
+        #region # 计算字符串MD5值 —— string GetHash(string text)
         /// <summary>
         /// 计算字符串MD5值
         /// </summary>
         /// <param name="text">待转换的字符串</param>
         /// <returns>MD5值</returns>
-        private string GetMD5(string text)
+        private string GetHash(string text)
         {
             byte[] buffer = Encoding.Default.GetBytes(text);
             using (MD5 md5 = MD5.Create())
@@ -197,7 +192,7 @@ namespace SD.CacheManager.AOP.Aspects
         /// <returns>JSON字符串</returns>
         private string GetJson(object instance)
         {
-            #region # 验证参数
+            #region # 验证
 
             if (instance == null)
             {
@@ -208,7 +203,10 @@ namespace SD.CacheManager.AOP.Aspects
 
             try
             {
-                JsonSerializerSettings settting = new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
+                JsonSerializerSettings settting = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                };
                 return JsonConvert.SerializeObject(instance, Formatting.None, settting);
             }
             catch (InvalidOperationException)
