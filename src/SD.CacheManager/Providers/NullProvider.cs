@@ -10,7 +10,7 @@ namespace SD.CacheManager
     public class NullProvider : ICacheAdapter
     {
         public void Set<T>(string key, T value) { }
-        public void Set<T>(string key, T value, DateTime exp) { }
+        public void Set<T>(string key, T value, DateTime expiredTime) { }
         public T Get<T>(string key) { return default(T); }
         public void Remove(string key) { }
         public void RemoveRange(IEnumerable<string> keys) { }

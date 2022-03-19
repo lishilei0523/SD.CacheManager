@@ -3,7 +3,7 @@
 namespace SD.CacheManager.Configurations
 {
     /// <summary>
-    /// SD.CacheManager配置
+    /// 缓存提供者元素
     /// </summary>
     public class CacheProviderElement : ConfigurationElement
     {

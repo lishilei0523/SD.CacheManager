@@ -19,15 +19,15 @@ namespace SD.CacheManager
         void Set<T>(string key, T value);
         #endregion
 
-        #region # 写入缓存（有过期时间） —— void Set<T>(string key, T value, DateTime exp)
+        #region # 写入缓存（有过期时间） —— void Set<T>(string key, T value, DateTime expiredTime)
         /// <summary>
         /// 写入缓存（有过期时间）
         /// </summary>
         /// <typeparam name="T">数据类型</typeparam>
         /// <param name="key">键</param>
         /// <param name="value">值</param>
-        /// <param name="exp">过期时间</param>
-        void Set<T>(string key, T value, DateTime exp);
+        /// <param name="expiredTime">过期时间</param>
+        void Set<T>(string key, T value, DateTime expiredTime);
         #endregion
 
         #region # 读取缓存 —— T Get<T>(string key)

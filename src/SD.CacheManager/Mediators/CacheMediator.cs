@@ -55,21 +55,21 @@ namespace SD.CacheManager
         }
         #endregion
 
-        #region # 写入缓存（有过期时间） —— static void Set<T>(string key, T value, DateTime exp)
+        #region # 写入缓存（有过期时间） —— static void Set<T>(string key, T value, DateTime expiredTime)
         /// <summary>
         /// 写入缓存（有过期时间）
         /// </summary>
         /// <typeparam name="T">数据类型</typeparam>
         /// <param name="key">键</param>
         /// <param name="value">值</param>
-        /// <param name="exp">过期时间</param>
-        public static void Set<T>(string key, T value, DateTime exp)
+        /// <param name="expiredTime">过期时间</param>
+        public static void Set<T>(string key, T value, DateTime expiredTime)
         {
             using (ICacheAdapter cacheAdapter = (ICacheAdapter)Activator.CreateInstance(_CacheImplType))
             {
                 lock (_Sync)
                 {
-                    cacheAdapter.Set(key, value, exp);
+                    cacheAdapter.Set(key, value, expiredTime);
                 }
             }
         }

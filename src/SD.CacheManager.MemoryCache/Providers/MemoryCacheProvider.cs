@@ -21,7 +21,7 @@ namespace SD.CacheManager
         public void Set<T>(string key, T value)
         {
             //如果缓存已存在则清空
-            if (MemoryCache.Default.Get(key) != null)
+            if (MemoryCache.Default.Contains(key))
             {
                 MemoryCache.Default.Remove(key);
             }
@@ -35,24 +35,26 @@ namespace SD.CacheManager
         }
         #endregion
 
-        #region # 写入缓存（有过期时间） —— void Set<T>(string key, T value, DateTime exp)
+        #region # 写入缓存（有过期时间） —— void Set<T>(string key, T value, DateTime expiredTime)
         /// <summary>
         /// 写入缓存（有过期时间）
         /// </summary>
         /// <typeparam name="T">数据类型</typeparam>
         /// <param name="key">键</param>
         /// <param name="value">值</param>
-        /// <param name="exp">过期时间</param>
-        public void Set<T>(string key, T value, DateTime exp)
+        /// <param name="expiredTime">过期时间</param>
+        public void Set<T>(string key, T value, DateTime expiredTime)
         {
             //如果缓存已存在则清空
-            if (MemoryCache.Default.Get(key) != null)
+            if (MemoryCache.Default.Contains(key))
             {
                 MemoryCache.Default.Remove(key);
             }
 
-            CacheItemPolicy policy = new CacheItemPolicy();
-            policy.AbsoluteExpiration = exp;
+            CacheItemPolicy policy = new CacheItemPolicy
+            {
+                AbsoluteExpiration = expiredTime
+            };
 
             MemoryCache.Default.Set(key, value, policy);
         }

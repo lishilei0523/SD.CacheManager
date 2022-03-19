@@ -44,20 +44,20 @@ namespace SD.CacheManager
         }
         #endregion
 
-        #region # 写入缓存（有过期时间） —— void Set<T>(string key, T value, DateTime exp)
+        #region # 写入缓存（有过期时间） —— void Set<T>(string key, T value, DateTime expiredTime)
         /// <summary>
         /// 写入缓存（有过期时间）
         /// </summary>
         /// <typeparam name="T">数据类型</typeparam>
         /// <param name="key">键</param>
         /// <param name="value">值</param>
-        /// <param name="exp">过期时间</param>
-        public void Set<T>(string key, T value, DateTime exp)
+        /// <param name="expiredTime">过期时间</param>
+        public void Set<T>(string key, T value, DateTime expiredTime)
         {
             string json = value.ToJson();
-            TimeSpan timeSpan = exp - DateTime.Now;
+            TimeSpan expiry = expiredTime - DateTime.Now;
 
-            this._redisClient.StringSet(key, json, timeSpan);
+            this._redisClient.StringSet(key, json, expiry);
         }
         #endregion
 
@@ -102,7 +102,7 @@ namespace SD.CacheManager
         {
             #region # 验证
 
-            keys = keys?.ToArray() ?? new string[0];
+            keys = keys?.Distinct().ToArray() ?? new string[0];
             if (!keys.Any())
             {
                 return;
@@ -110,7 +110,7 @@ namespace SD.CacheManager
 
             #endregion
 
-            ICollection<RedisKey> redisKeys = new HashSet<RedisKey>();
+            IList<RedisKey> redisKeys = new List<RedisKey>();
             foreach (string key in keys)
             {
                 redisKeys.Add(key);
