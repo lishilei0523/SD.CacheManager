@@ -1,14 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net462;net47</TargetFrameworks>
+    <TargetFrameworks>net462;netcoreapp3.1;net6.0</TargetFrameworks>
     <IsPackable>false</IsPackable>
     <Authors>Lee</Authors>
     <Company>SD</Company>
     <Copyright>Copyright © SD 2023</Copyright>
   </PropertyGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net462'">
     <Reference Include="System.Runtime.Caching" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1' Or '$(TargetFramework)' == 'net6.0'">
+    <PackageReference Include="System.Runtime.Caching" Version="4.7.0" />
   </ItemGroup>
 
   <ItemGroup>
