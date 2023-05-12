@@ -1,9 +1,14 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SD.Common;
+using SD.Toolkits;
 using SD.Toolkits.Redis;
 using StackExchange.Redis;
 using System;
+using System.Configuration;
 using System.Net;
+using System.Reflection;
 using System.Threading.Tasks;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace SD.CacheManager.Redis.Tests.TestCases
 {
@@ -14,11 +19,17 @@ namespace SD.CacheManager.Redis.Tests.TestCases
     public class RedisCacheProviderTests
     {
         /// <summary>
-        /// 初始化测试
+        /// 测试初始化
         /// </summary>
         [TestInitialize]
         public void Init()
         {
+#if NETCOREAPP3_1_OR_GREATER
+            Assembly entryAssembly = Assembly.GetExecutingAssembly();
+            Configuration configuration = ConfigurationExtension.GetConfigurationFromAssembly(entryAssembly);
+            CacheManagerSection.Initialize(configuration);
+            RedisSection.Initialize(configuration);
+#endif
             EndPoint[] endpoints = RedisManager.Instance.GetEndPoints();
             foreach (EndPoint endpoint in endpoints)
             {

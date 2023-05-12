@@ -1,8 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SD.Common;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace SD.CacheManager.MemoryCache.Tests.TestCases
 {
@@ -13,11 +17,16 @@ namespace SD.CacheManager.MemoryCache.Tests.TestCases
     public class MemoryCacheProviderTests
     {
         /// <summary>
-        /// 初始化测试
+        /// 测试初始化
         /// </summary>
         [TestInitialize]
-        public void Init()
+        public void Initialize()
         {
+#if NETCOREAPP3_1_OR_GREATER
+            Assembly entryAssembly = Assembly.GetExecutingAssembly();
+            Configuration configuration = ConfigurationExtension.GetConfigurationFromAssembly(entryAssembly);
+            CacheManagerSection.Initialize(configuration);
+#endif
             foreach (KeyValuePair<string, object> kv in System.Runtime.Caching.MemoryCache.Default.ToArray())
             {
                 System.Runtime.Caching.MemoryCache.Default.Remove(kv.Key);

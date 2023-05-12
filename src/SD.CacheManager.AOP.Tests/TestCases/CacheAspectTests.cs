@@ -18,10 +18,9 @@ namespace SD.CacheManager.AOP.Tests.TestCases
         /// 测试初始化
         /// </summary>
         [TestInitialize]
-        public void Init()
+        public void Initialize()
         {
-#if NETCOREAPP3_1
-            //初始化配置文件
+#if NETCOREAPP3_1_OR_GREATER
             Assembly entryAssembly = Assembly.GetExecutingAssembly();
             Configuration configuration = ConfigurationExtension.GetConfigurationFromAssembly(entryAssembly);
             CacheManagerSection.Initialize(configuration);
