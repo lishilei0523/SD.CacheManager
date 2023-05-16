@@ -14,6 +14,7 @@ namespace SD.CacheManager.AOP.Tests.TestCases
     [TestClass]
     public class CacheAspectTests
     {
+        #region # 测试初始化 —— void Initialize()
         /// <summary>
         /// 测试初始化
         /// </summary>
@@ -27,7 +28,9 @@ namespace SD.CacheManager.AOP.Tests.TestCases
             RedisSection.Initialize(configuration);
 #endif
         }
+        #endregion
 
+        #region # 测试缓存切面 —— void TestCacheAspect()
         /// <summary>
         /// 测试缓存切面
         /// </summary>
@@ -43,7 +46,12 @@ namespace SD.CacheManager.AOP.Tests.TestCases
             string product3 = GetProduct("橘子");
             Trace.WriteLine(product3);
         }
+        #endregion
 
+
+        //Private
+
+        #region # 获取产品 —— static string GetProduct(string keywords)
         /// <summary>
         /// 获取产品
         /// </summary>
@@ -52,5 +60,6 @@ namespace SD.CacheManager.AOP.Tests.TestCases
         {
             return keywords;
         }
+        #endregion
     }
 }

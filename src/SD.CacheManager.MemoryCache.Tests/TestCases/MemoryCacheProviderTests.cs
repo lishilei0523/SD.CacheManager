@@ -16,6 +16,7 @@ namespace SD.CacheManager.MemoryCache.Tests.TestCases
     [TestClass]
     public class MemoryCacheProviderTests
     {
+        #region # 测试初始化 —— void Initialize()
         /// <summary>
         /// 测试初始化
         /// </summary>
@@ -32,9 +33,25 @@ namespace SD.CacheManager.MemoryCache.Tests.TestCases
                 System.Runtime.Caching.MemoryCache.Default.Remove(kv.Key);
             }
         }
+        #endregion
 
+        #region # 测试清理 —— void Cleanup()
         /// <summary>
-        /// 测试插入与读取缓存
+        /// 测试清理
+        /// </summary>
+        [TestCleanup]
+        public void Cleanup()
+        {
+            foreach (KeyValuePair<string, object> kv in System.Runtime.Caching.MemoryCache.Default.ToArray())
+            {
+                System.Runtime.Caching.MemoryCache.Default.Remove(kv.Key);
+            }
+        }
+        #endregion
+
+        #region # 测试设置与读取缓存 —— void TestSetAndGetCache()
+        /// <summary>
+        /// 测试设置与读取缓存
         /// </summary>
         [TestMethod]
         public void TestSetAndGetCache()
@@ -50,9 +67,11 @@ namespace SD.CacheManager.MemoryCache.Tests.TestCases
                 Assert.IsTrue(value == cacheValue);
             }
         }
+        #endregion
 
+        #region # 测试设置与读取缓存 —— void TestSetAndGetCacheParallel()
         /// <summary>
-        /// 测试插入与读取缓存
+        /// 测试设置与读取缓存
         /// </summary>
         [TestMethod]
         public void TestSetAndGetCacheParallel()
@@ -68,9 +87,11 @@ namespace SD.CacheManager.MemoryCache.Tests.TestCases
                 Assert.IsTrue(value == cacheValue);
             });
         }
+        #endregion
 
+        #region # 测试删除缓存 —— void TestRemoveCache()
         /// <summary>
-        /// 测试移除缓存
+        /// 测试删除缓存
         /// </summary>
         [TestMethod]
         public void TestRemoveCache()
@@ -80,15 +101,17 @@ namespace SD.CacheManager.MemoryCache.Tests.TestCases
 
             CacheMediator.Set(cacheKey, cacheValue);
 
-            //移除
+            //删除
             CacheMediator.Remove(cacheKey);
 
             string value = CacheMediator.Get<string>(cacheKey);
             Assert.IsNull(value);
         }
+        #endregion
 
+        #region # 测试删除缓存 —— void TestRemoveRangeCache_Keys()
         /// <summary>
-        /// 测试移除缓存
+        /// 测试删除缓存
         /// </summary>
         [TestMethod]
         public void TestRemoveRangeCache_Keys()
@@ -101,23 +124,12 @@ namespace SD.CacheManager.MemoryCache.Tests.TestCases
             CacheMediator.Set(cacheKey1, cacheValue1);
             CacheMediator.Set(cacheKey2, cacheValue2);
 
-            //移除
+            //删除
             CacheMediator.RemoveRange(new[] { cacheKey1, cacheKey2 });
 
             Assert.IsFalse(CacheMediator.Exists(cacheKey1));
             Assert.IsFalse(CacheMediator.Exists(cacheKey2));
         }
-
-        /// <summary>
-        /// 清理
-        /// </summary>
-        [TestCleanup]
-        public void TestFinalize()
-        {
-            foreach (KeyValuePair<string, object> kv in System.Runtime.Caching.MemoryCache.Default.ToArray())
-            {
-                System.Runtime.Caching.MemoryCache.Default.Remove(kv.Key);
-            }
-        }
+        #endregion
     }
 }
