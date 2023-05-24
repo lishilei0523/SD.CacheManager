@@ -17,11 +17,11 @@
     <DocumentationFile>bin\Release\$(TargetFramework)\SD.CacheManager.AOP.xml</DocumentationFile>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net40' Or '$(TargetFramework)' == 'net45'">
+  <ItemGroup Condition="$(TargetFramework.Equals('net40')) Or $(TargetFramework.Equals('net45'))">
     <PackageReference Include="MrAdvice" Version="2.9.9" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net461' Or '$(TargetFramework)' == 'netstandard2.0'">
+  <ItemGroup Condition="$(TargetFramework.Equals('net461')) Or $(TargetFramework.Equals('netstandard2.0'))">
     <PackageReference Include="MrAdvice" Version="2.12.0" />
   </ItemGroup>
 

@@ -7,7 +7,7 @@
     <Copyright>Copyright © SD 2023</Copyright>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1' Or '$(TargetFramework)' == 'net6.0'">
+  <ItemGroup Condition="$(TargetFramework.Equals('netcoreapp3.1')) Or $(TargetFramework.Equals('net6.0'))">
     <EmbeddedResource Include="App.config" />
   </ItemGroup>
 
