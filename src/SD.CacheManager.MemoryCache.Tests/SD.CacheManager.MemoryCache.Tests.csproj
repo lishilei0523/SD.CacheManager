@@ -13,14 +13,13 @@
 
   <ItemGroup Condition="$(TargetFramework.Equals('netcoreapp3.1')) Or $(TargetFramework.Equals('net6.0'))">
     <EmbeddedResource Include="App.config" />
-    <PackageReference Include="System.Runtime.Caching" Version="4.7.0" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="3.0.2" />
-    <PackageReference Include="MSTest.TestFramework" Version="3.0.2" />
-    <PackageReference Include="coverlet.collector" Version="3.2.0">
+    <PackageReference Include="MSTest.TestAdapter" Version="3.0.3" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.0.3" />
+    <PackageReference Include="coverlet.collector" Version="6.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
