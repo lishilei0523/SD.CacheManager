@@ -24,7 +24,8 @@ namespace SD.CacheManager.AOP.Aspects
         /// <summary>
         /// 基础构造器
         /// </summary>
-        /// <param name="expiredSpan">缓存时长（null表示永不过期）</param>
+        /// <param name="expiredSpan">缓存时长</param>
+        /// <remarks>null表示永不过期</remarks>
         public CacheAspect(TimeSpan? expiredSpan = null)
         {
             this._expiredSpan = expiredSpan;
@@ -33,7 +34,8 @@ namespace SD.CacheManager.AOP.Aspects
         /// <summary>
         /// 基础构造器
         /// </summary>
-        /// <param name="expiredMinutes">缓存时长（单位：分钟）</param>
+        /// <param name="expiredMinutes">缓存时长</param>
+        /// <remarks>单位：分钟</remarks>
         public CacheAspect(int expiredMinutes = 5)
         {
             this._expiredSpan = new TimeSpan(0, expiredMinutes, 0);
@@ -48,7 +50,6 @@ namespace SD.CacheManager.AOP.Aspects
         /// <summary>
         /// 拦截方法
         /// </summary>
-        /// <param name="context">方法元数据</param>
         public void Advise(MethodAdviceContext context)
         {
             bool hasCache = this.OnEntry(context);
@@ -67,7 +68,6 @@ namespace SD.CacheManager.AOP.Aspects
         /// <summary>
         /// 方法进入事件
         /// </summary>
-        /// <param name="context">方法元数据</param>
         private bool OnEntry(MethodAdviceContext context)
         {
             bool hasCache = false;
@@ -96,7 +96,6 @@ namespace SD.CacheManager.AOP.Aspects
         /// <summary>
         /// 方法结束事件
         /// </summary>
-        /// <param name="context">方法元数据</param>
         private void OnExit(MethodAdviceContext context)
         {
             if (context.ReturnValue == null)
@@ -156,7 +155,7 @@ namespace SD.CacheManager.AOP.Aspects
             string keyHash = this.GetHash(key);
 
             //构造最终键
-            string finalKey = string.Format("{0}.{1}({2})", context.TargetMethod.DeclaringType?.FullName, context.TargetMethod.Name, keyHash);
+            string finalKey = $"{context.TargetMethod.DeclaringType?.FullName}.{context.TargetMethod.Name}({keyHash})";
 
             return finalKey;
         }
