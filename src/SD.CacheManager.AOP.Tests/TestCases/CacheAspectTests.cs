@@ -21,7 +21,7 @@ namespace SD.CacheManager.AOP.Tests.TestCases
         [TestInitialize]
         public void Initialize()
         {
-#if NETCOREAPP3_1_OR_GREATER
+#if NET8_0_OR_GREATER
             Assembly entryAssembly = Assembly.GetExecutingAssembly();
             Configuration configuration = ConfigurationExtension.GetConfigurationFromAssembly(entryAssembly);
             CacheManagerSection.Initialize(configuration);
