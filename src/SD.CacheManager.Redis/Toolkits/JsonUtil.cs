@@ -1,5 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace SD.CacheManager.Redis.Toolkits
 {
@@ -28,11 +29,11 @@ namespace SD.CacheManager.Redis.Toolkits
 
             try
             {
-                return JsonConvert.DeserializeObject<T>(json);
+                return JsonSerializer.Deserialize<T>(json);
             }
-            catch (InvalidOperationException)
+            catch (Exception exception)
             {
-                throw new InvalidOperationException(string.Format("无法将源JSON反序列化为给定类型\"{0}\"，请检查类型后重试！", typeof(T).Name));
+                throw new InvalidOperationException($"无法将源JSON反序列化为给定类型\"{typeof(T).Name}\"，请检查类型后重试！", exception);
             }
         }
         #endregion
@@ -56,12 +57,12 @@ namespace SD.CacheManager.Redis.Toolkits
 
             try
             {
-                JsonSerializerSettings settting = new JsonSerializerSettings
+                JsonSerializerOptions settting = new JsonSerializerOptions
                 {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                    ReferenceHandler = ReferenceHandler.IgnoreCycles
                 };
 
-                return JsonConvert.SerializeObject(instance, Formatting.None, settting);
+                return JsonSerializer.Serialize(instance, settting);
             }
             catch (InvalidOperationException)
             {
