@@ -66,7 +66,7 @@ namespace SD.CacheManager.Redis.Tests.TestCases
             for (int index = 0; index < 1000; index++)
             {
                 string cacheKey = Guid.NewGuid().ToString();
-                string cacheValue = Guid.NewGuid().ToString();
+                string cacheValue = $"用户-{index:D5}";
 
                 CacheMediator.Set(cacheKey, cacheValue);
 
@@ -86,7 +86,7 @@ namespace SD.CacheManager.Redis.Tests.TestCases
             Parallel.For(0, 1000, index =>
             {
                 string cacheKey = Guid.NewGuid().ToString();
-                string cacheValue = Guid.NewGuid().ToString();
+                string cacheValue = $"用户-{index:D5}";
 
                 CacheMediator.Set(cacheKey, cacheValue);
 

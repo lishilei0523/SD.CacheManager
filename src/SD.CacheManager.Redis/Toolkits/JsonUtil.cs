@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -29,7 +30,14 @@ namespace SD.CacheManager.Redis.Toolkits
 
             try
             {
-                return JsonSerializer.Deserialize<T>(json);
+                JsonSerializerOptions settting = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.IgnoreCycles,
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+                };
+                T instance = JsonSerializer.Deserialize<T>(json, settting);
+
+                return instance;
             }
             catch (Exception exception)
             {
@@ -59,10 +67,12 @@ namespace SD.CacheManager.Redis.Toolkits
             {
                 JsonSerializerOptions settting = new JsonSerializerOptions
                 {
-                    ReferenceHandler = ReferenceHandler.IgnoreCycles
+                    ReferenceHandler = ReferenceHandler.IgnoreCycles,
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
                 };
+                string json = JsonSerializer.Serialize(instance, settting);
 
-                return JsonSerializer.Serialize(instance, settting);
+                return json;
             }
             catch (InvalidOperationException)
             {
