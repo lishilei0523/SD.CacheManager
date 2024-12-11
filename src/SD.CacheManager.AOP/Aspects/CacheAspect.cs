@@ -1,9 +1,11 @@
 ﻿using ArxOne.MrAdvice.Advice;
-using Newtonsoft.Json;
 using System;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace SD.CacheManager.AOP.Aspects
 {
@@ -187,8 +189,6 @@ namespace SD.CacheManager.AOP.Aspects
         /// <summary>
         /// object序列化JSON字符串
         /// </summary>
-        /// <param name="instance">object及其子类对象</param>
-        /// <returns>JSON字符串</returns>
         private string GetJson(object instance)
         {
             #region # 验证
@@ -202,13 +202,14 @@ namespace SD.CacheManager.AOP.Aspects
 
             try
             {
-                JsonSerializerSettings settting = new JsonSerializerSettings
+                JsonSerializerOptions settting = new JsonSerializerOptions
                 {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                    ReferenceHandler = ReferenceHandler.IgnoreCycles,
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
                 };
-                return JsonConvert.SerializeObject(instance, Formatting.None, settting);
+                return JsonSerializer.Serialize(instance, settting);
             }
-            catch (InvalidOperationException)
+            catch (Exception)
             {
                 return string.Empty;
             }
