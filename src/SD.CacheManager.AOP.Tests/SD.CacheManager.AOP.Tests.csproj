@@ -20,7 +20,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="MrAdvice" Version="2.16.0" />
-    <PackageReference Include="SD.Common" Version="3.3.0" />
+    <PackageReference Include="SD.Common" Version="3.4.0" />
   </ItemGroup>
 
   <ItemGroup>
