@@ -1,0 +1,18 @@
+<Solution>
+  <Folder Name="/01 - Core/">
+    <Project Path="src/SD.CacheManager/SD.CacheManager.csproj" />
+  </Folder>
+  <Folder Name="/02 - Providers/">
+    <Project Path="src/SD.CacheManager.MemoryCache/SD.CacheManager.MemoryCache.csproj" />
+    <Project Path="src/SD.CacheManager.Redis/SD.CacheManager.Redis.csproj" />
+  </Folder>
+  <Folder Name="/03 - AOP/">
+    <Project Path="src/SD.CacheManager.AOP/SD.CacheManager.AOP.csproj" />
+  </Folder>
+  <Folder Name="/04 - Tests/">
+    <Project Path="src/SD.CacheManager.AOP.Tests/SD.CacheManager.AOP.Tests.csproj" />
+    <Project Path="src/SD.CacheManager.MemoryCache.Tests/SD.CacheManager.MemoryCache.Tests.csproj" />
+    <Project Path="src/SD.CacheManager.Redis.Tests/SD.CacheManager.Redis.Tests.csproj" />
+    <Project Path="src/SD.CacheManager.Tests/SD.CacheManager.Tests.csproj" />
+  </Folder>
+</Solution>
