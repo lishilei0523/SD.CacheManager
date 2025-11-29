@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/00 - Global/">
+    <File Path="Directory.Build.props" />
+  </Folder>
   <Folder Name="/01 - Core/">
     <Project Path="src/SD.CacheManager/SD.CacheManager.csproj" />
   </Folder>
