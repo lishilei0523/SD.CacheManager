@@ -1,12 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net462;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net462;net8.0;net10.0</TargetFrameworks>
     <Description>SD.CacheManager 缓存组件 - AOP</Description>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Text.Json" Version="10.0.1" />
-    <PackageReference Include="MrAdvice" Version="2.19.1" />
+    <PackageReference Include="System.Text.Json" Version="10.0.5" />
+    <PackageReference Include="MrAdvice" Version="2.20.5" />
   </ItemGroup>
 
   <ItemGroup>
