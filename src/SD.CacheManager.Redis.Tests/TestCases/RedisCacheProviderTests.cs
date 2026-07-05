@@ -4,6 +4,7 @@ using SD.Toolkits;
 using SD.Toolkits.Redis;
 using StackExchange.Redis;
 using System;
+using System.Collections.Concurrent;
 using System.Configuration;
 using System.Net;
 using System.Reflection;
@@ -83,15 +84,19 @@ namespace SD.CacheManager.Redis.Tests.TestCases
         [TestMethod]
         public void TestSetAndGetCacheParallel()
         {
-            Parallel.For(0, 1000, index =>
+            Partitioner<Tuple<int, int>> partitioner = Partitioner.Create(0, 1000);
+            Parallel.ForEach(partitioner, range =>
             {
-                string cacheKey = Guid.NewGuid().ToString();
-                string cacheValue = $"用户-{index:D5}";
+                for (int index = range.Item1; index < range.Item2; index++)
+                {
+                    string cacheKey = Guid.NewGuid().ToString();
+                    string cacheValue = $"用户-{index:D5}";
 
-                CacheMediator.Set(cacheKey, cacheValue);
+                    CacheMediator.Set(cacheKey, cacheValue);
 
-                string value = CacheMediator.Get<string>(cacheKey);
-                Assert.IsTrue(value == cacheValue);
+                    string value = CacheMediator.Get<string>(cacheKey);
+                    Assert.IsTrue(value == cacheValue);
+                }
             });
         }
         #endregion
