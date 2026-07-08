@@ -8,6 +8,7 @@ using System.Collections.Concurrent;
 using System.Configuration;
 using System.Net;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
@@ -32,6 +33,9 @@ namespace SD.CacheManager.Redis.Tests.TestCases
             CacheManagerSection.Initialize(configuration);
             RedisSection.Initialize(configuration);
 #endif
+            //初始化线程池
+            ThreadPool.SetMinThreads(200, 200);
+
             EndPoint[] endpoints = RedisManager.Instance.GetEndPoints();
             foreach (EndPoint endpoint in endpoints)
             {
