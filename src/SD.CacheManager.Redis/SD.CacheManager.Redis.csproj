@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.Text.Json" Version="10.0.12" />
-    <PackageReference Include="SD.Toolkits.Redis" Version="4.0.4" />
+    <PackageReference Include="SD.Toolkits.Redis" Version="4.0.5" />
   </ItemGroup>
 
   <ItemGroup>
