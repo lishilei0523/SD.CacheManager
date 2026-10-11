@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net462;netstandard2.0</TargetFrameworks>
-    <Version>3.0.3</Version>
     <Description>SD.CacheManager 缓存组件 - Redis实现</Description>
   </PropertyGroup>
 
